@@ -1,0 +1,1 @@
+Put all images here. Place them in subfolders according to their category.
