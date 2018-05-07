@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang=en>
+    <head>
+        <title>FreshTomatoes - Splash v1.0</title>
+        <meta charset="utf-8"/>
+        <style>
+            .button {
+                background-color: #f8d5ce;
+                border: 5px solid #eb4b2e;
+                color: #eb4b2e;
+                padding: 15px 15px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 24px;
+                margin: 4px 2px;
+                border-radius: 20px;
+            }
+        </style>
+        <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
+        <script>
+            var config = {
+                apiKey: "AIzaSyC2Kd411Dg8EZk6q_w1p4AvGfuCLHJk45w",
+                authDomain: "freshtomatoes-4171e.firebaseapp.com",
+                databaseURL: "https://freshtomatoes-4171e.firebaseio.com",
+                projectId: "freshtomatoes-4171e",
+                storageBucket: "freshtomatoes-4171e.appspot.com",
+                messagingSenderId: "554706711397"
+            };
+            firebase.initializeApp(config);
+        </script>
+
+        <link rel="stylesheet" type="text/css" href="styleboy.css">
+    </head>
+    <body id="hi">
+        <div id="description">
+            <h1>Welcome to Fresh Tomatoes</h1>
+            <h3>Let's get started!</h3>
+            <p>Tutorial placeholder: Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?
+            </p>
+            <button onclick="tutorialSet()" class="button">Go</button>
+        </div>
+    </body>
+</html>
+<script>
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            // User is signed in.
+            var displayName = user.displayName;
+            var email = user.email;
+            var emailVerified = user.emailVerified;
+            var photoURL = user.photoURL;
+            var isAnonymous = user.isAnonymous;
+            var uid = user.uid;
+            var providerData = user.providerData;
+        } else {
+            // User is signed out.
+            // ...
+        }
+    });
+    function tutorialSet() {
+        firebase.database().ref('users/' + firebase.auth().currentUser.uid).set({
+            tutorial_completed: true
+        });
+        setTimeout("location.href = 'main.html';", 500);
+
+    }
+</script>
