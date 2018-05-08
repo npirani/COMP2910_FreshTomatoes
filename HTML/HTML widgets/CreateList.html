@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="Css/CreateList.css">
+<meta charset="utf-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+ <!-- Bootstrap CSS -->
+ <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+ <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+ <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container">
+        
+<div id="myDIV" class="header">
+  <h2 style="margin:5px">Your List</h2>
+  <input type="text" id="myInput" placeholder="Title...">
+  <span onclick="newElement()" class="btn">Add</span>
+</div>
+
+<div>
+<ul id="myUL" class="myul">
+  
+</ul>
+</div>
+
+</div>
+</body>
+<script>
+
+// Create a "close" button and append it to each list item
+var myNodelist = document.getElementsByTagName("myUL");
+var i;
+for (i = 0; i < myNodelist.length; i++) {
+  var span = document.createElement("SPAN");
+  var txt = document.createTextNode("\u00D7");
+  span.className = "close";
+  span.appendChild(txt);
+  myNodelist[i].appendChild(span);
+}
+
+// Click on a close button to hide the current list item
+var close = document.getElementsByClassName("close");
+var i;
+for (i = 0; i < close.length; i++) {
+  close[i].onclick = function() {
+    var div = this.parentElement;
+    div.style.display = "none";
+  }
+}
+
+// Create a new list item when clicking on the "Add" button
+function newElement() {
+  var li = document.createElement("li");
+  var inputValue = document.getElementById("myInput").value;
+  var t = document.createTextNode(inputValue);
+  li.appendChild(t);
+  if (inputValue === '') {
+    alert("You must write something!");
+  } else {
+    document.getElementById("myUL").appendChild(li);
+  }
+  document.getElementById("myInput").value = "";
+//------------------------------------------------------------------------
+var editButton = document.createElement("span");
+        editButton.className = "btn dropdown-toggle";
+        
+        var text = document.createTextNode("\u270f");
+        editButton.appendChild(text);
+
+        editButton.setAttribute("data-toggle", "dropdown");
+        var spanEdit = document.createElement("span");
+        spanEdit.className = "caret";
+        editButton.append(spanEdit);
+
+        var editListUL = document.createElement("ul");
+        editListUL.className = "dropdown-menu";
+
+        
+
+        //create the first list item
+        var listItem1 = document.createElement("LI");
+        var spanListItem = document.createElement("button");
+        spanListItem.className = "btn btn-link";
+        var x1 = document.createTextNode("expiry");
+
+        
+        spanListItem.appendChild(x1);        
+        listItem1.append(spanListItem);        
+        editListUL.appendChild(listItem1);
+
+        // 2nd list item
+        var listItem2 = document.createElement("LI");
+        var spanListItem2 = document.createElement("button");
+        spanListItem2.className = "btn btn-link";
+        var x2 = document.createTextNode("rename");
+
+        
+        spanListItem2.appendChild(x2);        
+        listItem2.append(spanListItem2);        
+        editListUL.appendChild(listItem2);
+
+        //3rd list item
+        var listItem3 = document.createElement("LI");
+        var spanListItem3 = document.createElement("button");
+        spanListItem3.className = "btn btn-link";
+        var x3 = document.createTextNode("Fridge");
+
+        spanListItem3.appendChild(x3);
+        spanListItem3.appendChild(x3);        
+        listItem3.append(spanListItem3);        
+        editListUL.appendChild(listItem3);
+
+        //4th list item
+        var listItem4 = document.createElement("LI");
+        var spanListItem4 = document.createElement("button");
+        spanListItem4.className = "btn btn-link";
+        var x4 = document.createTextNode("rename");
+
+        spanListItem4.appendChild(x4);
+        spanListItem4.appendChild(x4);        
+        listItem4.append(spanListItem4);        
+        editListUL.appendChild(listItem4);
+    
+
+        $(document).ready(function(){
+       
+            li.append(editButton);
+            li.append(editListUL);
+       });
+        
+
+
+
+//------------------------------------------------------------------------
+  var span = document.createElement("SPAN");
+  var txt = document.createTextNode("\u00D7");
+  span.className = "close";
+  span.appendChild(txt);
+  li.appendChild(span);
+
+  for (i = 0; i < close.length; i++) {
+    close[i].onclick = function() {
+      var div = this.parentElement;
+      div.style.display = "none";
+    }
+  }
+}
+</script>
+</html>
