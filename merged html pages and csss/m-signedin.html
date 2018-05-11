@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang=en>
+    <head>
+        <title>FreshTomatoes - Splash v1.0</title>
+        <meta charset="utf-8"/>
+        <style>
+            #avatar {
+                object-fit: cover;
+                height: 90px;
+                width: 90px;
+                padding: 0px;
+                background: #f85454;
+                border-radius: 800px;
+                border: 2px solid #eb4b2e;
+            }
+        </style>
+        <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
+        <script>
+            var config = {
+                apiKey: "AIzaSyC2Kd411Dg8EZk6q_w1p4AvGfuCLHJk45w",
+                authDomain: "freshtomatoes-4171e.firebaseapp.com",
+                databaseURL: "https://freshtomatoes-4171e.firebaseio.com",
+                projectId: "freshtomatoes-4171e",
+                storageBucket: "freshtomatoes-4171e.appspot.com",
+                messagingSenderId: "554706711397"
+            };
+            firebase.initializeApp(config);
+        </script>
+
+        <link rel="stylesheet" type="text/css" href="styleboy.css">
+    </head>
+    <body id="hi">
+        <div id="description">
+            <div>
+                <img id="avatar" alt="Avatar" height="80" src="default_avatar.jpg">
+            </div>
+            <p>You're signed in as <span id="name"></span></p>
+        </div>
+    </body>
+</html>
+<script>
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            // User is signed in.
+            var displayName = user.displayName;
+            var email = user.email;
+            var emailVerified = user.emailVerified;
+            var photoURL = user.photoURL;
+            var isAnonymous = user.isAnonymous;
+            var uid = user.uid;
+            var providerData = user.providerData;
+            document.getElementById("avatar").setAttribute("src", photoURL);
+            span = document.getElementById("name");
+            txt = document.createTextNode(displayName);
+            span.appendChild(txt);
+            console.log(displayName);
+            console.log(photoURL);
+            console.log(typeof(displayName));
+
+            return firebase.database().ref('/users/' + uid).once('value').then(function(snapshot) {
+                var tutorial = (snapshot.child("tutorial_completed").val()) || false;
+                console.log(tutorial)
+                if (tutorial) {
+                    setTimeout("location.href = 'main.html';",3500);
+                } else {
+                    setTimeout("location.href = 'getstarted.html';",3500);
+                }
+            });
+
+
+            // ...
+        } else {
+            // User is signed out.
+            // ...
+        }
+    });
+</script>
