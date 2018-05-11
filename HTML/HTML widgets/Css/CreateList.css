@@ -14,13 +14,18 @@ body {
 ul {
   margin: 0;
   padding: 0;
+    border:none;
 }
 
 /* Style the list items */
 ul li {
   cursor: pointer;
+    border:none;
+    z-index: 0;
   position: relative;
   padding: 10px 8px 10px 40px;
+    margin-left: 5px;
+    margin-right: 5px;
   list-style-type: none;
   background: #eee;
   font-size: 18px;
@@ -50,19 +55,6 @@ ul li.checked {
   text-decoration: line-through;
 }
 
-/* Add a "checked" mark when clicked on */
-ul li.checked::before {
-  content: '';
-  position: absolute;
-  border-color: #fff;
-  border-style: solid;
-  border-width: 0 2px 2px 0;
-  top: 10px;
-  left: 16px;
-  transform: rotate(45deg);
-  height: 15px;
-  width: 7px;
-}
 /*put the edit button in the end*/
 .dropdown-toggle{
   
@@ -71,27 +63,65 @@ ul li.checked::before {
   position: absolute;
 }
 
-/* Style the close button */
-.close{
-  font-size: 2rem;
-  position: absolute;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  padding: 6px 16px 12px 16px;
+
+/* Style the list text*/
+.textboi{
+    padding-left: 10px;
 }
 
-.close:hover {
-  background-color: #f44336;
-  color: white;
+/* Style the close button */
+.btn-danger{
+  position: absolute;
+  left: 0;
+  top: 5%;
+    bottom:5%;
+}
+/* Style the check button */
+.btn-success{
+  position: absolute;
+  right: 0;
+  top: 5%;
+    bottom:5%;
+}
+/* Style the date button */
+.cal{
+  position: absolute;
+  right: 45px;
+  top: 5%;
+    bottom:5%;
+}
+
+/* Style the edit button */
+.edit{
+  position: absolute;
+  right: 0px;
+  top: 5%;
+    bottom:5%;
+}
+
+/* Style the edit buttons */
+.btn-secondary{
+    margin-left: 2px;
+    margin-right:2px;
+    position:relative;
+    bottom: 5px;
+}
+
+/* Style the dropdown */
+.dropdown-menu {
+    height: 45px;
 }
 
 /* Style the header */
 .header {
+    position:sticky;
+    top:0;
+    left:0;
   background-color: #f44336;
-  padding: 30px 40px;
+  padding: 10px 5px;
   color: white;
-  text-align: center;
+    text-align: center;
+        z-index: 2;
 }
 
 /* Clear floats after the header */
@@ -104,25 +134,25 @@ ul li.checked::before {
 /* Style the input */
 input {
   border: none;
+    padding: 0;
   width: 75%;
-  padding: 10px;
-  float: left;
-  font-size: 16px;
+    height:45px;
+    font-size: 100px;
 }
 
 /* Style the "Add" button */
 .addBtn {
-  padding: 10px;
-  width: 25%;
-  background: #d9d9d9;
+  padding: 0px;
+  background: #f0f0f0;
   color: #555;
-  float: left;
-  text-align: center;
-  font-size: 16px;
-  cursor: pointer;
-  transition: 0.3s;
+height:45px;
 }
 
-.addBtn:hover {
-  background-color: #bbb;
+.fa-plus-square {
+    height:100%;
 }
+
+.container {
+    padding: 0px !important;
+}
+
