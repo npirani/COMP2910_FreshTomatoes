@@ -1,0 +1,137 @@
+
+body {
+  margin: 0;
+  min-width: 250px;
+}
+
+/* Include the padding and border in an element's total width and height */
+* {
+  box-sizing: border-box;
+}
+
+
+/* Remove margins and padding from the list */
+ul {
+  margin: 0;
+  padding: 0;
+    border:none;
+}
+
+/* Style the list items */
+ul li {
+  cursor: pointer;
+    border:none;
+    z-index: 0;
+  position: relative;
+  padding: 10px 8px 10px 40px;
+    margin-left: 5px;
+    margin-right: 5px;
+  list-style-type: none;
+  background: #eee;
+  font-size: 18px;
+  transition: 0.2s;
+  
+  /* make the list items unselectable */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Set all odd list items to a different color (zebra-stripes) */
+ul li:nth-child(odd) {
+  background: #f9f9f9;
+}
+
+/* Darker background-color on hover */
+ul li:hover {
+  background: #ddd;
+}
+
+/* When clicked on, add a background color and strike out text */
+ul li.checked {
+  background: #888;
+  color: #fff;
+  text-decoration: line-through;
+}
+
+/*put the edit button in the end*/
+.dropdown-toggle{
+  
+  bottom: 0%;
+  right: 22%;
+  position: absolute;
+}
+
+
+/* Style the list text*/
+.textboi{
+    padding-left: 10px;
+}
+
+/* Style the close button */
+.btn-danger{
+  position: absolute;
+  left: 0;
+  top: 5%;
+    bottom:5%;
+}
+/* Style the check button */
+.btn-success{
+  position: absolute;
+  right: 0;
+  top: 5%;
+    bottom:5%;
+}
+/* Style the date button */
+.btn-primary{
+  position: absolute;
+  right: 45px;
+  top: 5%;
+    bottom:5%;
+}
+
+/* Style the header */
+.header {
+    position:sticky;
+    top:0;
+    left:0;
+  background-color: #f44336;
+  padding: 10px 5px;
+  color: white;
+    text-align: center;
+        z-index: 2;
+}
+
+/* Clear floats after the header */
+.header:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Style the input */
+input {
+  border: none;
+    padding: 0;
+  width: 75%;
+    height:45px;
+    font-size: 100px;
+}
+
+/* Style the "Add" button */
+.addBtn {
+  padding: 0px;
+  background: #f0f0f0;
+  color: #555;
+height:45px;
+}
+
+.fa-plus-square {
+    height:100%;
+}
+
+.container {
+    padding: 0px !important;
+}
+
