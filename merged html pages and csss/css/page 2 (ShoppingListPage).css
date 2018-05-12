@@ -1,10 +1,10 @@
-
-
-.navbar-nav > li > a {
-                padding-top:1px !important; padding-bottom:1px !important;
+            .navbar-nav > li > a {
+                padding-top:1px !important; 
+                padding-bottom:1px !important;
                 height: 30px;
             }
-            .navbar {min-height:10px !important;}
+            .navbar {
+                min-height:10px !important;}
             .navbar-toggle {
                 padding: 0 0;
                 margin-top: 0px;
@@ -13,22 +13,10 @@
             .navbar-brand {
                 max-height: 40px;
             }
-      .logoboi {
+            .logoboi {
                 max-height: inherit;
             } 
-             .button {
-                background-color: #f8d5ce;
-                border: 5px solid #eb4b2e;
-                color: #eb4b2e;
-                padding: 15px 15px;
-                text-align: center;
-                text-decoration: none;
-                display: inline-block;
-                font-size: 24px;
-                margin: 4px 2px;
-                border-radius: 20px;
-            }
-            
+
             #showcase {
                 background-image: url(../images/back.jpg);
                 margin-top: 20px;
@@ -36,31 +24,12 @@
                 background-repeat: no-repeat; 
                 color: white;
                 font-family: 'Poppins', sans-serif;
-                
+
             }
-           #hi {
+            #hi {
                 border-radius: 50%;
-               height: 50px;
-               margin-left: 10px;
-               margin-bottom: 10px;
-               
-        
-}
- 
- 
-    h1 {
+                height: 50px;
                 margin-left: 10px;
-                font-size: 140%;
-            }
+                margin-bottom: 10px;
 
-@media (min-width: 768px){
-#account-dropdown-menu-id {
-    position: absolute;
-    left: 55%;
-    }
-}
-
-#account{
-    padding-bottom: 0;
-    padding-top: 0;
 }

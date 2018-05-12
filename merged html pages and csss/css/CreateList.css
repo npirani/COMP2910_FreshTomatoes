@@ -18,7 +18,7 @@ ul {
 }
 
 /* Style the list items */
-ul li {
+.myul li {
   cursor: pointer;
     border:none;
     z-index: 0;
@@ -39,29 +39,23 @@ ul li {
 }
 
 /* Set all odd list items to a different color (zebra-stripes) */
-ul li:nth-child(odd) {
+.myul li:nth-child(odd) {
   background: #f9f9f9;
 }
 
 /* Darker background-color on hover */
-ul li:hover {
+.myul li:hover {
   background: #ddd;
 }
 
 /* When clicked on, add a background color and strike out text */
-ul li.checked {
+.myul li.checked {
   background: #888;
   color: #fff;
   text-decoration: line-through;
 }
 
-/*put the edit button in the end*/
-.dropdown-toggle{
-  
-  bottom: 0%;
-  right: 22%;
-  position: absolute;
-}
+
 
 
 /* Style the list text*/
@@ -84,11 +78,32 @@ ul li.checked {
     bottom:5%;
 }
 /* Style the date button */
-.btn-primary{
+.cal{
   position: absolute;
   right: 45px;
   top: 5%;
     bottom:5%;
+}
+
+/* Style the edit button */
+.edit{
+  position: absolute;
+  right: 0px;
+  top: 5%;
+    bottom:5%;
+}
+
+/* Style the edit buttons */
+.btn-secondary{
+    margin-left: 2px;
+    margin-right:2px;
+    position:relative;
+    bottom: 5px;
+}
+
+/* Style the dropdown */
+.listDrop {
+    height: 45px;
 }
 
 /* Style the header */
