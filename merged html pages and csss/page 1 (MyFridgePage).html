@@ -69,7 +69,7 @@
         <div class="w3-container" id="showcase">
             <br>
             <br>
-            <h1 class="w3-xxxlarge w3-text-red" id="showcasetext">My Shopping List
+            <h1 class="w3-xxxlarge w3-text-red" id="showcasetext">My Fridge
 </h1>
         </div>
 
@@ -85,8 +85,8 @@
             </div>
 
             <div>
-
                 <ul id="myUL" class="myul">
+
                 </ul>
             </div>
             <button class="btn btn-block" id="topboi" href="#top">
@@ -116,57 +116,118 @@
 </script>
 
 <!--List scripts-->
-<script>
-    // Create a new list item when clicking on the "Add" button
-    function newElement() {
-        var li = document.createElement("li");
-        var inputValue = document.getElementById("myInput").value;
-        var b = document.createTextNode(inputValue);
-        var t = document.createElement("span");
-        t.className = "textboi";
-        t.appendChild(b);
-        li.appendChild(t);
-        if (inputValue === '') {
-            alert("You must write something!");
-        } else {
-            document.getElementById("myUL").appendChild(li);
-        }
-        document.getElementById("myInput").value = "";
+    <script>
 
-        var closeboi = document.createElement("button");
-        var closetxt = document.createElement("i");
-        closetxt.className = "far fa-minus-square";
-        closeboi.className = "btn btn-danger";
-        closeboi.appendChild(closetxt);
-        li.appendChild(closeboi);
 
-        var close = document.getElementsByClassName("btn-danger");
-        var i;
-        for (i = 0; i < close.length; i++) {
-            close[i].onclick = function() {
-                var div = this.parentElement;
-                div.style.display = "none";
+
+        // Create a new list item when clicking on the "Add" button
+        function newElement() {
+            var li = document.createElement("li");
+            li.className = "dropleft";
+            var inputValue = document.getElementById("myInput").value;
+            var b = document.createTextNode(inputValue);
+            var t = document.createElement("span");
+            t.className = "textboi";
+            t.appendChild(b);
+            li.appendChild(t);
+            if (inputValue === '') {
+                alert("You must write something!");
+            } else {
+                document.getElementById("myUL").appendChild(li);
             }
+            document.getElementById("myInput").value = "";
+            //------------------------------------------------------------------------
+            var editButton = document.createElement("button");
+            editButton.className = "btn dropdown-toggle btn-primary edit";
+
+            var text = document.createElement("span");
+            text.className = "fas fa-edit"
+            editButton.appendChild(text);
+
+            editButton.setAttribute("data-toggle", "dropdown");
+            var spanEdit = document.createElement("span");
+            spanEdit.className = "caret";
+            editButton.append(spanEdit);
+
+            var editListUL = document.createElement("div");
+            editListUL.className = "dropdown-menu listDrop";
+
+
+
+            //create the first list item
+            var spanListItem = document.createElement("button");
+            spanListItem.className = "btn btn-secondary";
+            var x1 = document.createElement("span");
+            x1.className = "far fa-calendar"
+
+
+            spanListItem.appendChild(x1);              
+            editListUL.appendChild(spanListItem);
+
+            // 2nd list item
+            var spanListItem2 = document.createElement("button");
+            spanListItem2.className = "btn btn-secondary";
+            var x2 = document.createElement("span");
+            x2.className = "fas fa-pencil-alt"
+
+
+            spanListItem2.appendChild(x2);               
+            editListUL.appendChild(spanListItem2);
+
+            //3rd list item
+            var spanListItem3 = document.createElement("button");
+            spanListItem3.className = "btn btn-secondary";
+            var x3 = document.createElement("span");
+            x3.className = "far fa-question-circle"
+            
+            spanListItem3.appendChild(x3);              
+            editListUL.appendChild(spanListItem3);
+
+            //4th list item
+            var spanListItem4 = document.createElement("button");
+            spanListItem4.className = "btn btn-secondary";
+            var x4 = document.createElement("span");
+            x4.className = "far fa-question-circle"
+
+            spanListItem4.appendChild(x4);               
+            editListUL.appendChild(spanListItem4);
+
+
+            $(document).ready(function(){
+
+                li.append(editButton);
+                li.append(editListUL);
+            });
+
+
+
+
+            //------------------------------------------------------------------------
+            var closeboi = document.createElement("button");
+            var closetxt = document.createElement("i");
+            closetxt.className = "far fa-minus-square";
+            closeboi.className = "btn btn-danger";
+            closeboi.appendChild(closetxt);
+            li.appendChild(closeboi);
+
+            var close = document.getElementsByClassName("btn-danger");
+            var i;
+            for (i = 0; i < close.length; i++) {
+                close[i].onclick = function() {
+                    var div = this.parentElement;
+                    div.style.display = "none";
+                }
+            }
+         
+
+
         }
+        $('#topboi').click(function() {
+            $('html, body').animate({scrollTop : 0},800);
+            return false;
+        })
 
 
-        var checkboi = document.createElement("button");
-        var checktxt = document.createElement("i");
-        checktxt.className = "far fa-check-square";
-        checkboi.className = "btn btn-success";
-        checkboi.appendChild(checktxt);
-        li.appendChild(checkboi);            
 
 
-        var dateboi = document.createElement("button");
-        var datetxt = document.createElement("i");
-        datetxt.className = "far fa-calendar-alt";
-        dateboi.className = "btn btn-primary cal";
-        dateboi.appendChild(datetxt);
-        li.appendChild(dateboi);
-    }
-    $('#topboi').click(function() {
-        $('html, body').animate({scrollTop : 0},800);
-        return false;
-    })
-</script>
+    </script>

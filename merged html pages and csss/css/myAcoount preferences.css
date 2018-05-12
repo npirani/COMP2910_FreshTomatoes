@@ -1,0 +1,27 @@
+ .navbar-nav > li > a {
+                padding-top:1px !important; padding-bottom:1px !important;
+                height: 30px;
+            }
+            .navbar {min-height:10px !important;}
+            .navbar-toggle {
+                padding: 0 0;
+                margin-top: 0px;
+                margin-bottom: 0;
+            }
+            .navbar-brand {
+                max-height: 40px;
+            }
+            .logoboi {
+                max-height: inherit;
+            } 
+@media (min-width: 768px){
+#account-dropdown-menu-id {
+    position: absolute;
+    left: 55%;
+    }
+}
+
+#account{
+    padding-bottom: 0;
+    padding-top: 0;
+}

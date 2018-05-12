@@ -1,5 +1,5 @@
 
-.navbar-nav > li > a {
+            .navbar-nav > li > a {
                 padding-top:1px !important; padding-bottom:1px !important;
                 height: 30px;
             }
@@ -27,38 +27,4 @@
                 margin: 4px 2px;
                 border-radius: 20px;
             }
-            
-            #showcase {
-                background-image: url(../images/back.jpg);
-                margin-top: 20px;
-                background-size: cover;
-                background-repeat: no-repeat; 
-                color: white;
-                font-family: 'Poppins', sans-serif;
-                
-            }
-           #hi {
-               border-radius: 100%;
-               height: 40px;
-               margin-left: 2px;
-               margin-bottom: 10px;
-               
         
-            }
- 
-            h1 {
-                margin-left: 10px;
-                font-size: 140%;
-            }
-
-@media (min-width: 768px){
-#account-dropdown-menu-id {
-    position: absolute;
-    left: 55%;
-    }
-}
-
-#account{
-    padding-bottom: 0;
-    padding-top: 0;
-}
