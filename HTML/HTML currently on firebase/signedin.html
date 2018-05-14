@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang=en>
+    <head>
+        <title>FreshTomatoes - Splash v1.0</title>
+        <meta charset="utf-8"/>
+        <style>
+            #avatar {
+                object-fit: cover;
+                height: 90px;
+                width: 90px;
+                padding: 0px;
+                background: #f85454;
+                border-radius: 800px;
+                border: 2px solid #eb4b2e;
+            }
+        </style>
+        <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase-firestore.js"></script>
+        <script>
+            var config = {
+                apiKey: "AIzaSyC2Kd411Dg8EZk6q_w1p4AvGfuCLHJk45w",
+                authDomain: "freshtomatoes-4171e.firebaseapp.com",
+                databaseURL: "https://freshtomatoes-4171e.firebaseio.com",
+                projectId: "freshtomatoes-4171e",
+                storageBucket: "freshtomatoes-4171e.appspot.com",
+                messagingSenderId: "554706711397"
+            };
+            firebase.initializeApp(config);
+            db = firebase.firestore();
+            const firestore = firebase.firestore();
+            const settings = {timestampsInSnapshots: true};
+            firestore.settings(settings);
+        </script>
+
+        <link rel="stylesheet" type="text/css" href="css/styleboy.css">
+    </head>
+    <body id="hi">
+        <div id="description">
+            <div>
+                <img id="avatar" alt="Avatar" height="80" src="default_avatar.jpg">
+            </div>
+            <p>You're signed in as <span id="name"></span></p>
+        </div>
+    </body>
+</html>
+<script>
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            // User is signed in.
+            var displayName = user.displayName;
+            var email = user.email;
+            var emailVerified = user.emailVerified;
+            var photoURL = user.photoURL;
+            var isAnonymous = user.isAnonymous;
+            var uid = user.uid;
+            var providerData = user.providerData;
+            document.getElementById("avatar").setAttribute("src", photoURL);
+            span = document.getElementById("name");
+            txt = document.createTextNode(displayName);
+            span.appendChild(txt);
+
+
+
+
+            var userCol = db.collection("users").doc(uid);
+            userCol.get().then(function (userDat) {
+                if (userDat.exists) {
+                    console.log("User exists, redirecting to app");
+                    setTimeout("location.href = 'shoplist.html';",3500);
+                } else {
+                    console.log("User does not exist, trying to create user");
+                    userCol.set({
+                        lastThreeLists: "placeholder"
+
+                    }).then(function() {
+                        console.log("User doc created");
+                        var firstList = userCol.collection("lists");
+                        firstList.add({
+                            itemCount: 0,
+                            itemIndex: {
+                            }
+                        }).then(function(firstListRef){
+                            var firstListUID = firstListRef.id;
+                            console.log("1st item list created. Ref: ", firstListUID);
+                            console.log("Trying to set lastThreeLists.")
+                            userCol.set({
+                                lastThreeLists: {
+                                    "list1": firstListUID,
+                                    "list2": "placeholder",
+                                    "list3": "placeholder"
+                                }
+                            }).then(function(){
+                                console.log("lastThreeLists set");
+                            }).catch(function(error2){
+                                console.log("Error setting lastThreeLists: ", error2);
+                            });
+                            
+                        }).catch(function(error1){
+                            console.log("Error creating 1st list: ", error1);
+                        });
+                    }).catch(function(error){
+                        console.log("Error creating user: ", error);
+                    });
+
+                    setTimeout("location.href = 'getstarted.html';",3500);
+
+                }
+            }).catch(function(error) {
+                console.log("Error getting doc: ", error);
+            });
+
+
+
+
+
+
+            // ...
+        } else {
+            console.log("Not logged in")
+            // User is signed out.
+            // ...
+        }
+    });
+</script>

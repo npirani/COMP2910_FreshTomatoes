@@ -30,7 +30,7 @@
             firebase.initializeApp(config);
         </script>
 
-        <link rel="stylesheet" type="text/css" href="styleboy.css">
+        <link rel="stylesheet" type="text/css" href="css/styleboy.css">
     </head>
     
     <body id="hi">
@@ -51,10 +51,7 @@
         }
     });
     function tutorialSet() {
-        firebase.database().ref('users/' + firebase.auth().currentUser.uid).set({
-            tutorial_completed: true
-        });
-        setTimeout("location.href = 'main.html';", 500);
+        setTimeout("location.href = 'shoplist.html';", 500);
 
     }
 </script>
