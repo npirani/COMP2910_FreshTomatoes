@@ -43,6 +43,10 @@ ul {
   background: #f9f9f9;
 }
 
+.checked_item {
+    background: #c0f5c4 !important;
+}
+
 /* Darker background-color on hover */
 .myul li:hover {
   background: #ddd;

@@ -141,22 +141,24 @@
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
             // User is signed in.
-            var displayName = user.displayName;
-            var email = user.email;
-            var emailVerified = user.emailVerified;
-            var photoURL = user.photoURL;
-            var isAnonymous = user.isAnonymous;
-            var uid = user.uid;
-            var providerData = user.providerData;
+             displayName = user.displayName;
+             email = user.email;
+             emailVerified = user.emailVerified;
+             photoURL = user.photoURL;
+             isAnonymous = user.isAnonymous;
+             uid = user.uid;
+             providerData = user.providerData;
         } else {
             // User is signed out.
             // ...
         }
     });
-    function tutorialSet() {
-        firebase.database().ref('users/' + firebase.auth().currentUser.uid).set({
-            tutorial_completed: false
-        });
+</script>
 
-    }
+<!--List JS-->
+<script>
+    db.collection("users").doc("D5E4lUI1nMPPaTcH1o2m")
+        .onSnapshot(function(doc) {
+            console.log("Current data: ", doc.data());
+    });
 </script>
