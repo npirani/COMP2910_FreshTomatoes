@@ -187,7 +187,7 @@
         li.appendChild(t);
         li.id = UIDBoi;
         document.getElementById("myUL").appendChild(li);
-        
+
 
         document.getElementById("myInput").value = "";
 
@@ -219,7 +219,7 @@
         dateboi.id = UIDBoi.concat("_exp");
         dateboi.appendChild(datetxt);
         li.appendChild(dateboi);
-        
+
         checkList(UIDBoi, isSet);
     }
 
@@ -257,7 +257,8 @@
             itemRef.add({
                 itemName: localItemName,
                 set: false,
-                used: false
+                used: false,
+                expired: false
             }).then(function (addedItemRef) {
                 console.log("Added item. ", addedItemRef.id);
                 console.log("Trying to add reference to current item list");
@@ -289,14 +290,11 @@
 
     function deleteItem(clickID){
         var itemID = document.getElementById(clickID).parentElement.id;
+        var itemClass = document.getElementById(clickID).parentElement.className;
         console.log("Index of item to delete: ", itemID);
         var itemRef = db.collection("users").doc(uid).collection("items").doc(itemID);
-        itemRef.update({
-            used: true
-        }).then(function(){
-            console.log("used set to true. trying to delete ID from list itemIndex.");
-
-
+        if (itemClass.includes("checked_item")) {
+            console.log("Deleting list reference.");
             currentListRef.get().then(function(listDoc){
                 console.log("printing listdoc   ",listDoc.data());
                 var tempItemMap = listDoc.data()['itemIndex'];
@@ -312,11 +310,35 @@
             }).catch(function(error12){
                 console.log("couldnt not get item index. ", error12);
             })
+        } else {
+            console.log("Deleting item and reference.");
+            itemRef.update({
+                used: true
+            }).then(function(){
+                console.log("used set to true. trying to delete ID from list itemIndex.");
 
 
-        }).catch(function(error){
-            console.log("failed to set used to true. ", error);
-        });
+                currentListRef.get().then(function(listDoc){
+                    console.log("printing listdoc   ",listDoc.data());
+                    var tempItemMap = listDoc.data()['itemIndex'];
+                    console.log("Got item index: ", tempItemMap);
+                    delete tempItemMap[itemID.concat("_key")];
+                    currentListRef.update({
+                        itemIndex: tempItemMap
+                    }).then(function(){
+                        console.log("item index updated.");
+                    }).catch(function(error90){
+                        console.log("could not update item index. ", error90);
+                    });
+                }).catch(function(error12){
+                    console.log("couldnt not get item index. ", error12);
+                })
+
+
+            }).catch(function(error){
+                console.log("failed to set used to true. ", error);
+            });
+        }
     }  
 
 
