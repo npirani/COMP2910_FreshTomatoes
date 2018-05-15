@@ -15,8 +15,8 @@
         max-width: calc(100% - 75px);
 }
 .logoboi {
-    max-height: 40px;
-    max-width: inherit;
+    max-height: 30px;
+    max-width: 228px;
 
 } 
 
@@ -42,4 +42,8 @@ position:absolute;
     margin-left: 10px;
     margin-bottom: 10px;
 
+}
+#account{
+    padding-bottom: 0;
+    padding-top: 0;
 }

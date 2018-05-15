@@ -38,6 +38,7 @@
 
     </head>
     <body> 
+        <div class="container-fluid">
         <!-- This is the navbar HTML -->
         <nav class="navbar navbar-expand-md navbar-light bg-light">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -55,13 +56,14 @@
                         <a class="nav-link" href="fridge.html">My Fridge</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Account
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="preferences.html">Preferences</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Sign out</a>
+                       <div class="dropdown">
+                            <span class="btn btn dropdown-toggle" id="account" type="text" data-toggle="dropdown">Account
+                               </span>
+                                <ul class="dropdown-menu">
+                                    <li><a href="preferences.html">Preferences</a></li>
+                                    <li><a href="#">Sign Out</a></li>
+                                </ul>
+                        
                         </div>
                     </li>
                     <li class="nav-item">
@@ -97,6 +99,7 @@
             <button class="btn btn-block" id="topboi" href="#top">
                 <span class="fas fa-chevron-up"></span>
             </button>
+        </div>
         </div>
     </body>
 </html>
