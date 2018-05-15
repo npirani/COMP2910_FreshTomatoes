@@ -81,8 +81,8 @@
         <!--        List HTML-->
 
         <div id="myDIV" class="header">
-            <input type="text" id="myInput" placeholder="Title...">
-            <button type="submit" onclick="newElement()" class="btn addBtn">
+            <input type="text" id="myInput" placeholder="Add items here">
+            <button type="submit" onclick="addItem()" class="btn addBtn">
                 <span class="far fa-plus-square"></span>
 
             </button>
@@ -278,35 +278,15 @@
         } else if (localItemName.toLowerCase().trim() == "kiwi") {
             alert("Easter egg placeholder.");
         } else {
-            console.log("Attempting to add item to list: ", localItemName);
+            console.log("Attempting to add item to items: ", localItemName);
             var itemRef = db.collection("users").doc(uid).collection("items");
             itemRef.add({
                 itemName: localItemName,
-                set: false,
+                set: true,
+                expired: false,
                 used: false
             }).then(function (addedItemRef) {
                 console.log("Added item. ", addedItemRef.id);
-                console.log("Trying to add reference to current item list");
-                var itemID = addedItemRef.id;
-                var tempItemMap;
-                currentListRef.get().then(function(listDoc){
-                    console.log("printing listdoc   ",listDoc.data());
-                    tempItemMap = listDoc.data()['itemIndex'];
-                    console.log("Got item index: ", tempItemMap);
-                    var keyboi = itemID.concat("_key");
-                    tempItemMap[keyboi] = itemID;
-                    currentListRef.update({
-                        itemIndex: tempItemMap
-                    }).then(function(){
-                        console.log("item index updated.");
-                    }).catch(function(error90){
-                        console.log("could not update item index. ", error90);
-                    });
-
-                }).catch(function (error){
-                    console.log("Couldn't get item index. ", error);
-                });
-
             }).catch(function (errorboi) {
                 console.log("Couldn't add item. ", errorboi);
             });
