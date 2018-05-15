@@ -47,6 +47,10 @@ ul {
     background: #c0f5c4 !important;
 }
 
+.used_item {
+    background: #fc9873 !important;
+}
+
 /* Darker background-color on hover */
 .myul li:hover {
   background: #ddd;

@@ -18,6 +18,7 @@
 
         <!--Firebase config/setup-->
         <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase-firestore.js"></script>
         <script>
             var config = {
                 apiKey: "AIzaSyC2Kd411Dg8EZk6q_w1p4AvGfuCLHJk45w",
@@ -28,6 +29,10 @@
                 messagingSenderId: "554706711397"
             };
             firebase.initializeApp(config);
+            db = firebase.firestore();
+            const firestore = firebase.firestore();
+            const settings = {timestampsInSnapshots: true};
+            firestore.settings(settings);
         </script>
 
 
@@ -70,27 +75,27 @@
             <br>
             <br>
             <h1 class="w3-xxxlarge w3-text-red" id="showcasetext">My Fridge
-</h1>
+            </h1>
         </div>
 
         <!--        List HTML-->
 
-            <div id="myDIV" class="header">
-                <input type="text" id="myInput" placeholder="Title...">
-                <button type="submit" onclick="newElement()" class="btn addBtn">
-                    <span class="far fa-plus-square"></span>
+        <div id="myDIV" class="header">
+            <input type="text" id="myInput" placeholder="Add items here">
+            <button type="submit" onclick="addItem()" class="btn addBtn">
+                <span class="far fa-plus-square"></span>
 
-                </button>
-            </div>
-
-            <div>
-                <ul id="myUL" class="myul">
-
-                </ul>
-            </div>
-            <button class="btn btn-block" id="topboi" href="#top">
-                <span class="fas fa-chevron-up"></span>
             </button>
+        </div>
+
+        <div>
+            <ul id="myUL" class="myul">
+
+            </ul>
+        </div>
+        <button class="btn btn-block" id="topboi" href="#top">
+            <span class="fas fa-chevron-up"></span>
+        </button>
     </body>
 </html>
 
@@ -104,128 +109,206 @@
             var emailVerified = user.emailVerified;
             var photoURL = user.photoURL;
             var isAnonymous = user.isAnonymous;
-            var uid = user.uid;
+            uid = user.uid;
             var providerData = user.providerData;
         } else {
             // User is signed out.
             // ...
         }
+
+
+        //        Script to display list items
+        console.log(uid);
+
+        var setItemsRef = db.collection("users").doc(uid).collection("items").where("set", "==", true).where("used", "==", false);       
+
+
+
+        setItemsRef.onSnapshot({includeQueryMetadataChanges: true}, function(results) {
+            document.getElementById("myUL").innerHTML = '';
+            if (results.empty) {
+                console.log("No checked items found");
+
+            } else {
+
+                results.forEach(function (doc) {
+                    console.log("Item data:", doc.data());
+                    var used = doc.data()['expired'];
+                    var itemName = doc.data()['itemName'];
+                    var itemUID = doc.id;
+                    newElement(itemName, itemUID, used);
+                });
+            }
+
+
+        });
     });
 </script>
 
 <!--List scripts-->
-    <script>
+<script>
 
 
 
-        // Create a new list item when clicking on the "Add" button
-        function newElement() {
-            var li = document.createElement("li");
-            li.className = "dropleft";
-            var inputValue = document.getElementById("myInput").value;
-            var b = document.createTextNode(inputValue);
-            var t = document.createElement("span");
-            t.className = "textboi";
-            t.appendChild(b);
-            li.appendChild(t);
-            if (inputValue === '') {
-                alert("You must write something!");
-            } else {
-                document.getElementById("myUL").appendChild(li);
-            }
-            document.getElementById("myInput").value = "";
-            //------------------------------------------------------------------------
-            var editButton = document.createElement("button");
-            editButton.className = "btn dropdown-toggle btn-primary edit";
+    // Create a new list item when clicking on the "Add" button
+    function newElement(item, itemUID, used) {
 
-            var text = document.createElement("span");
-            text.className = "fas fa-edit"
-            editButton.appendChild(text);
-
-            editButton.setAttribute("data-toggle", "dropdown");
-            var spanEdit = document.createElement("span");
-            spanEdit.className = "caret";
-            editButton.append(spanEdit);
-
-            var editListUL = document.createElement("div");
-            editListUL.className = "dropdown-menu listDrop";
+        var li = document.createElement("li");
+        var inputValue = item;
+        var b = document.createTextNode(inputValue);
+        var t = document.createElement("span");
+        t.className = "textboi";
+        t.appendChild(b);
+        li.appendChild(t);
+        li.id = itemUID;
+        document.getElementById("myUL").appendChild(li);
 
 
-
-            //create the first list item
-            var spanListItem = document.createElement("button");
-            spanListItem.className = "btn btn-secondary";
-            var x1 = document.createElement("span");
-            x1.className = "far fa-calendar"
+        document.getElementById("myInput").value = "";
 
 
-            spanListItem.appendChild(x1);              
-            editListUL.appendChild(spanListItem);
+        //------------------------------------------------------------------------
+        var editButton = document.createElement("button");
+        editButton.className = "btn dropdown-toggle btn-primary edit";
 
-            // 2nd list item
-            var spanListItem2 = document.createElement("button");
-            spanListItem2.className = "btn btn-secondary";
-            var x2 = document.createElement("span");
-            x2.className = "fas fa-pencil-alt"
+        var text = document.createElement("span");
+        text.className = "fas fa-edit"
+        editButton.appendChild(text);
 
+        editButton.setAttribute("data-toggle", "dropdown");
+        var spanEdit = document.createElement("span");
+        spanEdit.className = "caret";
+        editButton.append(spanEdit);
 
-            spanListItem2.appendChild(x2);               
-            editListUL.appendChild(spanListItem2);
-
-            //3rd list item
-            var spanListItem3 = document.createElement("button");
-            spanListItem3.className = "btn btn-secondary";
-            var x3 = document.createElement("span");
-            x3.className = "far fa-question-circle"
-            
-            spanListItem3.appendChild(x3);              
-            editListUL.appendChild(spanListItem3);
-
-            //4th list item
-            var spanListItem4 = document.createElement("button");
-            spanListItem4.className = "btn btn-secondary";
-            var x4 = document.createElement("span");
-            x4.className = "far fa-question-circle"
-
-            spanListItem4.appendChild(x4);               
-            editListUL.appendChild(spanListItem4);
-
-
-            $(document).ready(function(){
-
-                li.append(editButton);
-                li.append(editListUL);
-            });
+        var editListUL = document.createElement("div");
+        editListUL.className = "dropdown-menu listDrop";
 
 
 
-
-            //------------------------------------------------------------------------
-            var closeboi = document.createElement("button");
-            var closetxt = document.createElement("i");
-            closetxt.className = "far fa-minus-square";
-            closeboi.className = "btn btn-danger";
-            closeboi.appendChild(closetxt);
-            li.appendChild(closeboi);
-
-            var close = document.getElementsByClassName("btn-danger");
-            var i;
-            for (i = 0; i < close.length; i++) {
-                close[i].onclick = function() {
-                    var div = this.parentElement;
-                    div.style.display = "none";
-                }
-            }
-         
+        //create the first list item
+        var spanListItem = document.createElement("button");
+        spanListItem.className = "btn btn-secondary";
+        var x1 = document.createElement("span");
+        x1.className = "far fa-calendar"
 
 
+        spanListItem.appendChild(x1);              
+        editListUL.appendChild(spanListItem);
+
+        // 2nd list item
+        var spanListItem2 = document.createElement("button");
+        spanListItem2.className = "btn btn-secondary";
+        var x2 = document.createElement("span");
+        x2.className = "fas fa-pencil-alt"
+
+
+        spanListItem2.appendChild(x2);               
+        editListUL.appendChild(spanListItem2);
+
+        //3rd list item
+        var spanListItem3 = document.createElement("button");
+        spanListItem3.className = "btn btn-secondary";
+        var x3 = document.createElement("span");
+        x3.className = "far fa-question-circle"
+
+        spanListItem3.appendChild(x3);              
+        editListUL.appendChild(spanListItem3);
+
+        //4th list item
+        var spanListItem4 = document.createElement("button");
+        spanListItem4.className = "btn btn-secondary";
+        var x4 = document.createElement("span");
+        x4.className = "far fa-question-circle"
+
+        spanListItem4.appendChild(x4);               
+        editListUL.appendChild(spanListItem4);
+
+
+        $(document).ready(function(){
+
+            li.append(editButton);
+            li.append(editListUL);
+        });
+
+
+
+
+        //------------------------------------------------------------------------
+        var closeboi = document.createElement("button");
+        var closetxt = document.createElement("i");
+        closetxt.className = "far fa-trash-alt";
+        closeboi.className = "btn btn-danger";
+        closeboi.appendChild(closetxt);
+        closeboi.id = itemUID.concat("_del");
+        closeboi.setAttribute("onClick", "deleteItem(this.id)");
+        li.appendChild(closeboi);
+
+
+        usedList(itemUID, used);
+
+
+
+    }
+
+
+    $('#topboi').click(function() {
+        $('html, body').animate({scrollTop : 0},800);
+        return false;
+    })
+
+    //Sets the class of the li to a desired value
+    function usedList(listID, setting) {
+        if (setting){
+            var newClassName = document.getElementById(listID).className.concat(" used_item");
+            document.getElementById(listID).className = newClassName;
+        } else {
+            var newClassName = document.getElementById(listID).className.replace(" used_item", "");
+            document.getElementById(listID).className = newClassName;
         }
-        $('#topboi').click(function() {
-            $('html, body').animate({scrollTop : 0},800);
-            return false;
-        })
+    }
+
+</script>
+
+<!--SCUD scripts-->
+<script>
+    function addItem(){
+        var localItemName = document.getElementById("myInput").value;
+        if (localItemName.trim() == "") {
+            alert("Enter a non-blank item name!");
+        } else if (localItemName.toLowerCase().trim() == "kiwi") {
+            alert("Easter egg placeholder.");
+        } else {
+            console.log("Attempting to add item to items: ", localItemName);
+            var itemRef = db.collection("users").doc(uid).collection("items");
+            itemRef.add({
+                itemName: localItemName,
+                set: true,
+                expired: false,
+                used: false
+            }).then(function (addedItemRef) {
+                console.log("Added item. ", addedItemRef.id);
+            }).catch(function (errorboi) {
+                console.log("Couldn't add item. ", errorboi);
+            });
+        }
+    }
+
+    function deleteItem(clickID){
+        var itemID = document.getElementById(clickID).parentElement.id;
+        console.log("Index of item to delete: ", itemID);
+        var itemRef = db.collection("users").doc(uid).collection("items").doc(itemID);
+        itemRef.update({
+            expired: true
+        }).then(function(){
+            console.log("used set to true.");
+
+
+        }).catch(function(error){
+            console.log("failed to set used to true. ", error);
+        });
+        usedList(itemID, true);
+    }  
 
 
 
-
-    </script>
+</script>
