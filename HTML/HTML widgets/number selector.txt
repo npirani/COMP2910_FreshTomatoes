@@ -1,0 +1,19 @@
+<script>
+    // replace the code after
+    //create first list item
+    
+    var spanListItem = document.createElement("select");
+    
+    spanListItem.setAttribute("id", "selectDay");
+    
+    //---------------------------------adding days as numbers (1-31)---------------
+    
+    for (i = 1; i <=31; i++) {
+        var day = document.createElement("option");
+        day.setAttribute("value", i);
+        var t = document.createTextNode(i);
+        day.appendChild(t);
+        spanListItem.appendChild(day);
+    }
+    
+</script>
