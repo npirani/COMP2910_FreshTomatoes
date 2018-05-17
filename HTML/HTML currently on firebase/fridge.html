@@ -37,7 +37,7 @@
 
 
     </head>
-    <body> 
+    <body id="bootstrap-overrides"> 
         <!-- This is the navbar HTML -->
         <nav class="navbar navbar-expand-md navbar-light bg-light">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -61,7 +61,7 @@
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="preferences.html">Preferences</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Sign out</a>
+                            <a class="dropdown-item" onClick="signOut()">Sign out</a>
                         </div>
                     </li>
                     <li class="nav-item">
@@ -89,9 +89,25 @@
         </div>
 
         <div>
-            <ul id="myUL" class="myul">
+            <div class="myul_dated">
+                <ul id="myUL" class="myul">
 
-            </ul>
+                </ul>  
+            </div>
+            <div class="myul_undated">
+                <ul id="myUL2" class="myul">
+                </ul>
+            </div>
+            <div class="myul_dated_expired">
+                <ul id="myUL3" class="myul">
+
+                </ul>
+            </div>
+            <div class="myul_undated_expired">
+                <ul id="myUL4" class="myul">
+
+                </ul>
+            </div>
         </div>
         <button class="btn btn-block" id="topboi" href="#top">
             <span class="fas fa-chevron-up"></span>
@@ -120,12 +136,14 @@
         //        Script to display list items
         console.log(uid);
 
-        var setItemsRef = db.collection("users").doc(uid).collection("items").where("set", "==", true).where("used", "==", false);       
+        var setItemsRef2 = db.collection("users").doc(uid).collection("items").where("set", "==", true).where("used", "==", false).where("expiry", "==", null);   
+        var setItemsRef1 = db.collection("users").doc(uid).collection("items").where("set", "==", true).where("used", "==", false).where("expiry", ">=", new Date(0)).orderBy("expiry", "asc").orderBy("itemName", "desc"); 
 
 
-
-        setItemsRef.onSnapshot({includeQueryMetadataChanges: true}, function(results) {
+        //        for items with expiry
+        setItemsRef1.onSnapshot({includeQueryMetadataChanges: true}, function(results) {
             document.getElementById("myUL").innerHTML = '';
+            document.getElementById("myUL3").innerHTML = '';
             if (results.empty) {
                 console.log("No checked items found");
 
@@ -133,10 +151,48 @@
 
                 results.forEach(function (doc) {
                     console.log("Item data:", doc.data());
-                    var used = doc.data()['expired'];
-                    var itemName = doc.data()['itemName'];
-                    var itemUID = doc.id;
-                    newElement(itemName, itemUID, used);
+                    {
+                        var expDate;
+                        if (doc.data()['expiry'] == null) {
+                            expDate = "-";
+                        } else {
+                            expDate = dayCalc(new Date(doc.data()['expiry']['seconds']*1000));
+                        }
+                        var used = doc.data()['expired'];
+                        var itemName = doc.data()['itemName'];
+                        var itemUID = doc.id;
+                        newElement(itemName, itemUID, used, expDate, "myUL");
+                    }
+                });
+            }
+
+
+        });        
+        //        For items without expiry
+        setItemsRef2.onSnapshot({includeQueryMetadataChanges: true}, function(results) {
+            document.getElementById("myUL2").innerHTML = '';
+            document.getElementById("myUL4").innerHTML = '';
+
+
+            if (results.empty) {
+                console.log("No checked items found");
+
+            } else {
+
+                results.forEach(function (doc) {
+                    console.log("Item data:", doc.data());
+                    {
+                        var expDate;
+                        if (doc.data()['expiry'] == null) {
+                            expDate = "-";
+                        } else {
+                            expDate = dayCalc(new Date(doc.data()['expiry']['seconds']*1000));
+                        }
+                        var used = doc.data()['expired'];
+                        var itemName = doc.data()['itemName'];
+                        var itemUID = doc.id;
+                        newElement(itemName, itemUID, used, expDate, "myUL2");
+                    }
                 });
             }
 
@@ -147,12 +203,17 @@
 
 <!--List scripts-->
 <script>
-
+    function dayCalc(dateboi){
+        console.log("grabbed date ", dateboi.getDate()); 
+        var dayDiff = Math.floor((dateboi.getTime() - Date.now()) / 86400000);
+        console.log("day diff: ", dayDiff);
+        return dayDiff;
+    }
 
 
     // Create a new list item when clicking on the "Add" button
-    function newElement(item, itemUID, used) {
-
+    function newElement(item, itemUID, used, expiryNumber, ULSelect) {
+        var UIDBoi = itemUID;
         var li = document.createElement("li");
         var inputValue = item;
         var b = document.createTextNode(inputValue);
@@ -161,79 +222,14 @@
         t.appendChild(b);
         li.appendChild(t);
         li.id = itemUID;
-        document.getElementById("myUL").appendChild(li);
+        document.getElementById(ULSelect).appendChild(li);
+
 
 
         document.getElementById("myInput").value = "";
 
 
-        //------------------------------------------------------------------------
-        var editButton = document.createElement("button");
-        editButton.className = "btn dropdown-toggle btn-primary edit";
 
-        var text = document.createElement("span");
-        text.className = "fas fa-edit"
-        editButton.appendChild(text);
-
-        editButton.setAttribute("data-toggle", "dropdown");
-        var spanEdit = document.createElement("span");
-        spanEdit.className = "caret";
-        editButton.append(spanEdit);
-
-        var editListUL = document.createElement("div");
-        editListUL.className = "dropdown-menu listDrop";
-
-
-
-        //create the first list item
-        var spanListItem = document.createElement("button");
-        spanListItem.className = "btn btn-secondary";
-        var x1 = document.createElement("span");
-        x1.className = "far fa-calendar"
-
-
-        spanListItem.appendChild(x1);              
-        editListUL.appendChild(spanListItem);
-
-        // 2nd list item
-        var spanListItem2 = document.createElement("button");
-        spanListItem2.className = "btn btn-secondary";
-        var x2 = document.createElement("span");
-        x2.className = "fas fa-pencil-alt"
-
-
-        spanListItem2.appendChild(x2);               
-        editListUL.appendChild(spanListItem2);
-
-        //3rd list item
-        var spanListItem3 = document.createElement("button");
-        spanListItem3.className = "btn btn-secondary";
-        var x3 = document.createElement("span");
-        x3.className = "far fa-question-circle"
-
-        spanListItem3.appendChild(x3);              
-        editListUL.appendChild(spanListItem3);
-
-        //4th list item
-        var spanListItem4 = document.createElement("button");
-        spanListItem4.className = "btn btn-secondary";
-        var x4 = document.createElement("span");
-        x4.className = "far fa-question-circle"
-
-        spanListItem4.appendChild(x4);               
-        editListUL.appendChild(spanListItem4);
-
-
-        $(document).ready(function(){
-
-            li.append(editButton);
-            li.append(editListUL);
-        });
-
-
-
-
-        //------------------------------------------------------------------------
         var closeboi = document.createElement("button");
         var closetxt = document.createElement("i");
         closetxt.className = "far fa-trash-alt";
@@ -244,7 +240,62 @@
         li.appendChild(closeboi);
 
 
-        usedList(itemUID, used);
+
+
+
+        var expContainer = document.createElement("span");
+        expContainer.className = "cal";
+        var spanListItem = document.createElement("select");
+        spanListItem.className = "form-control calSelect  btn-primary";
+        spanListItem.setAttribute("style", "-webkit-appearance: none;");
+        spanListItem.setAttribute("onfocus", "this.size=2;");
+        spanListItem.setAttribute("onblur", "this.size=1; setExpiry(this.id);");
+        spanListItem.setAttribute("onchange", "this.size=1; this.blur();");
+
+        var day = document.createElement("option");
+        day.setAttribute("value", "-");
+        var t = document.createTextNode("-");
+        day.appendChild(t);
+        spanListItem.appendChild(day);
+
+        for (i = 1; i <=31; i++) {
+            var day = document.createElement("option");
+            day.setAttribute("value", i);
+            var t = document.createTextNode(i);
+            day.appendChild(t);
+            spanListItem.appendChild(day);
+        }
+        spanListItem.id = UIDBoi.concat("_exp");
+        console.log(spanListItem.id);
+        spanListItem.value = expiryNumber;
+        expContainer.appendChild(spanListItem);
+        li.appendChild(expContainer);
+
+        if(expiryNumber == "-") {
+            expirySetList(spanListItem.id, false);
+        } else {
+            expirySetList(spanListItem.id, true);
+            setExpiryColour(itemUID.concat("_exp"), colourCalc(expiryNumber));
+        }        
+        if(expiryNumber != "-" && expiryNumber <= 0) {
+            used = true;
+            li.className = li.className.concat(" time_expired");
+        }
+
+
+        if (used){
+            usedList(itemUID, true);
+            document.getElementById(ULSelect).removeChild(document.getElementById(li.id));
+            console.log("EXPIRED, MOVING ", item, " ", ULSelect);
+            if(ULSelect == "myUL"){
+                document.getElementById("myUL3").appendChild(li);
+            } else {
+                document.getElementById("myUL4").appendChild(li);
+
+            }
+        } else {
+            usedList(itemUID, false);
+        }
 
 
 
@@ -266,6 +317,40 @@
             document.getElementById(listID).className = newClassName;
         }
     }
+    //Sets the expiry date CSS
+    function expirySetList(listID, setting) {
+        if (setting){
+            var newClassName = document.getElementById(listID).className.concat(" expiry_set");
+            document.getElementById(listID).className = newClassName;
+        } else {
+            var newClassName = document.getElementById(listID).className.replace(" expiry_set", "");
+            document.getElementById(listID).className = newClassName;
+        }
+    }
+    //Sets the coloring CSS for the expiry date
+    function setExpiryColour(listID, val){
+        var LIRef = document.getElementById(listID);
+        LIRef.setAttribute("style", "border-right-width: 8px !important; border-right-color: " + val + "!important;-webkit-appearance: none;");
+    }
+
+    //Calculates the RGB color for the expiry date
+    function colourCalc(valueboi) {
+        if (valueboi <= 8 && valueboi > 0) {
+            var HSL = "hsl(";
+            valueboi--;
+            HSL = HSL.concat(15 * valueboi) + ", 100%, 50%)";
+            console.log(HSL);
+            return HSL;
+        } else if (valueboi > 8) {
+            var RGB = "rgb(0,255,0)";
+            console.log(RGB);
+            return RGB;
+        } else {
+            var RGB = "rgb(100,0,0)";
+            console.log(RGB);
+            return RGB;
+        }
+    }
 
 </script>
 
@@ -282,6 +367,7 @@
             var itemRef = db.collection("users").doc(uid).collection("items");
             itemRef.add({
                 itemName: localItemName,
+                expiry: null,
                 set: true,
                 expired: false,
                 used: false
@@ -295,20 +381,77 @@
 
     function deleteItem(clickID){
         var itemID = document.getElementById(clickID).parentElement.id;
-        console.log("Index of item to delete: ", itemID);
+        var listItem = document.getElementById(clickID).parentElement;
+        console.log("Index of item to expire/unexpire: ", itemID);
         var itemRef = db.collection("users").doc(uid).collection("items").doc(itemID);
+        if (listItem.className.includes("used_item") && !listItem.className.includes("time_expired")){
+            itemRef.update({
+                expired: false
+            }).then(function(){
+                console.log("used set to false.");
+
+
+            }).catch(function(error){
+                console.log("failed to set used to false. ", error);
+            });
+
+            usedList(itemID, false);
+
+        } else {
+            itemRef.update({
+                expired: true
+            }).then(function(){
+                console.log("used set to true.");
+
+
+            }).catch(function(error){
+                console.log("failed to set used to true. ", error);
+            });
+            usedList(itemID, true);
+        }
+    }
+
+
+
+    function setExpiry(clickID) {
+        var itemID = document.getElementById(clickID).parentElement.parentElement.id;
+        var selectedValue = document.getElementById(clickID).value;
+        var setValue;
+        console.log("Index of item to set expiry date: ", itemID);
+        var itemRef = db.collection("users").doc(uid).collection("items").doc(itemID);
+        if (selectedValue == "-") {
+            setValue = null;
+            console.log("expiry date is null");
+        } else {
+            d = new Date(Date.now() + parseInt(selectedValue) * (86400000));
+            d.setHours(23);
+            d.setMinutes(59);
+            console.log("expiry date is: day: ", d.getDate(), "hour: ", d.getHours(), "minutes: ", d.getMinutes());
+            setValue = d; 
+        }
         itemRef.update({
-            expired: true
+            expiry: setValue
         }).then(function(){
-            console.log("used set to true.");
-
-
+            console.log("set expiry.");
         }).catch(function(error){
-            console.log("failed to set used to true. ", error);
+            console.log("failed to set expiry. ", error);
         });
-        usedList(itemID, true);
-    }  
+        if (setValue == null || setValue == false) {
+            expirySetList(clickID, false);
+        } else {
+            expirySetList(clickID, true);
+        }
+    }
 
-
+        function signOut() {
+        firebase.auth().signOut().then(function() {
+            console.log('Signed Out'); 
+            setTimeout(function () {
+                window.location.href = "index.html"; //will redirect to index
+            }, 1000);
+        }, function(error) {
+            console.error('Sign Out Error', error);
+        });
+    }
 
 </script>

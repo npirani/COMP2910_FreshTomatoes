@@ -3,20 +3,13 @@
     <head>
         <title>FreshTomatoes - Splash v1.0</title>
         <meta charset="utf-8"/>
-        <style>
-            .button {
-                background-color: #f8d5ce;
-                border: 5px solid #eb4b2e;
-                color: #eb4b2e;
-                padding: 15px 15px;
-                text-align: center;
-                text-decoration: none;
-                display: inline-block;
-                font-size: 24px;
-                margin: 4px 2px;
-                border-radius: 20px;
-            }
-        </style>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.ccssom/css?family=Lato" rel="stylesheet" type="text/css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
         <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
         <script>
             var config = {
@@ -30,7 +23,7 @@
             firebase.initializeApp(config);
         </script>
 
-        <link rel="stylesheet" type="text/css" href="css/styleboy.css">
+        <link rel="stylesheet" type="text/css" href="css/Style2.css">
     </head>
     
     <body id="hi">
@@ -56,11 +49,16 @@
     }
 </script>
         <div id="description">
-            <h1>Welcome to Fresh Tomatoes</h1>
-            <h3>Let's get started!</h3>
-            <p>Tutorial placeholder: Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur?
+            <h1>Let's get started!</h1>
+            <p>Fresh Tomatoes is a free, easy to use web app that will help to reduce your environmental impact and save you money. Once signed in you will have access to 3 different pages</p>
+            <h4>Shopping List</h4>
+            <p>The Shopping List allows you to make a shopping list before you visit the store. You can easily set the expiry date (in days) of perishable items by touching the blue button. As you buy items, you can check them off your list. Items can be removed from the list by touching the red delete button. Checked items will be added to your Fridge and can be safely deleted to clear your list.
             </p>
-            <button onclick="tutorialSet()" class="button">Go</button>
+          <h4>My Fridge</h4>
+          <p>My Fridge lists any items you've bought from the store. Items with expiry dates will appear in the top section, in the order they will expire. Non-perishable items will appear in the middle section. Expired and used items appear at the bottom in red. These items will be permanently deleted two days after they expired. If one of your items has expired early or been used, you can click the red trash icon to move it to mark it as expired/used.</p>
+          <h4>Recipes</h4>
+          <p>Recipes recommends a selection of popular recipes that will help to use up any soon-expiring ingredients.</p>
+            <button onclick="tutorialSet()" class="btn btn-success">Lets go!</button>
         </div>
       
     </body>
