@@ -9,6 +9,11 @@ body {
     box-sizing: border-box;
 }
 
+.dropdown-menu {
+    top: 80% !important;
+    left: 497px !important;
+}
+
 
 /* Remove margins and padding from the list */
 .myul {
@@ -63,6 +68,8 @@ body {
 .checked_item {
     background: #c0f5c4 !important;
 }
+
+
 
 
 
