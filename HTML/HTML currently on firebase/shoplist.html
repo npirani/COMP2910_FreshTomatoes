@@ -37,7 +37,7 @@
 
 
     </head>
-    <body> 
+    <body id="bootstrap-overrides"> 
         <!-- This is the navbar HTML -->
         <nav class="navbar navbar-expand-md navbar-light bg-light">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -97,6 +97,7 @@
             <button class="btn btn-block" id="topboi" href="#top">
                 <span class="fas fa-chevron-up"></span>
             </button>
+            <span class="element_test"></span>
         </div>
     </body>
 </html>
@@ -162,7 +163,14 @@
             if (doc1.exists) {
                 console.log("Document data:", doc1.data());
                 if (!(doc1.data()['used'])){
-                    newElement(doc1.data()['itemName'], value, doc1.data()['set']);
+                    var expDate;
+                    if (doc1.data()['expiry'] == null) {
+                        expDate = "-";
+                    } else {
+                        expDate = dayCalc(new Date(doc1.data()['expiry']['seconds']*1000));
+                    }
+                    console.log("calculated days till expiry: ", expDate);
+                    newElement(doc1.data()['itemName'], value, doc1.data()['set'], expDate);
 
                 } else {
                     console.log("item is used/expired/marked for deletion, not displaying");
@@ -175,8 +183,16 @@
             console.log("Error getting document:", error);
         });
     }
+
+    //    Returns number of days between now and future timestamp
+    function dayCalc(dateboi){
+        console.log("grabbed date ", dateboi.getDate()); 
+        return  Math.floor((dateboi.getTime() - Date.now()) / 86400000);
+    }
+
+
     // Create a new list item when clicking on the "Add" button
-    function newElement(item, UIDBoi, isSet) {
+    function newElement(item, UIDBoi, isSet, expiryNumber) {
 
         var li = document.createElement("li");
         var inputValue = item;
@@ -212,13 +228,38 @@
         li.appendChild(checkboi);            
 
 
-        var dateboi = document.createElement("button");
-        var datetxt = document.createElement("i");
-        datetxt.className = "far fa-calendar-alt";
-        dateboi.className = "btn btn-primary cal";
-        dateboi.id = UIDBoi.concat("_exp");
-        dateboi.appendChild(datetxt);
-        li.appendChild(dateboi);
+        var expContainer = document.createElement("span");
+        expContainer.className = "cal";
+        var spanListItem = document.createElement("select");
+        spanListItem.className = "form-control calSelect btn-primary";
+        spanListItem.setAttribute("style", "-webkit-appearance: none;");
+        spanListItem.setAttribute("onfocus", "this.size=2;");
+        spanListItem.setAttribute("onblur", "this.size=1; setExpiry(this.id);");
+        spanListItem.setAttribute("onchange", "this.size=1; this.blur();");
+
+        var day = document.createElement("option");
+        day.setAttribute("value", "-");
+        var t = document.createTextNode("-");
+        day.appendChild(t);
+        spanListItem.appendChild(day);
+
+        for (i = 1; i <=31; i++) {
+            var day = document.createElement("option");
+            day.setAttribute("value", i);
+            var t = document.createTextNode(i);
+            day.appendChild(t);
+            spanListItem.appendChild(day);
+        }
+        spanListItem.id = UIDBoi.concat("_exp");
+        spanListItem.value = expiryNumber;
+        expContainer.appendChild(spanListItem);
+        li.appendChild(expContainer);
+        
+        if(expiryNumber == "-") {
+            expirySetList(spanListItem.id, false);
+        } else {
+            expirySetList(spanListItem.id, true);
+        }
 
         checkList(UIDBoi, isSet);
     }
@@ -230,6 +271,15 @@
             document.getElementById(listID).className = newClassName;
         } else {
             var newClassName = document.getElementById(listID).className.replace(" checked_item", "");
+            document.getElementById(listID).className = newClassName;
+        }
+    }    
+    function expirySetList(listID, setting) {
+        if (setting){
+            var newClassName = document.getElementById(listID).className.concat(" expiry_set");
+            document.getElementById(listID).className = newClassName;
+        } else {
+            var newClassName = document.getElementById(listID).className.replace(" expiry_set", "");
             document.getElementById(listID).className = newClassName;
         }
     }
@@ -256,6 +306,7 @@
             var itemRef = db.collection("users").doc(uid).collection("items");
             itemRef.add({
                 itemName: localItemName,
+                expiry: null,
                 set: false,
                 used: false,
                 expired: false
@@ -365,6 +416,36 @@
             }).catch(function(error){
                 console.log("failed to set set to false. ", error);
             });
+        }
+    }
+
+    function setExpiry(clickID) {
+        var itemID = document.getElementById(clickID).parentElement.parentElement.id;
+        var selectedValue = document.getElementById(clickID).value;
+        var setValue;
+        console.log("Index of item to set expiry date: ", itemID);
+        var itemRef = db.collection("users").doc(uid).collection("items").doc(itemID);
+        if (selectedValue == "-") {
+            setValue = null;
+            console.log("expiry date is null");
+        } else {
+            d = new Date(Date.now() + parseInt(selectedValue) * (86400000));
+            d.setHours(23);
+            d.setMinutes(59);
+            console.log("expiry date is: day: ", d.getDate(), "hour: ", d.getHours(), "minutes: ", d.getMinutes());
+            setValue = d; 
+        }
+        itemRef.update({
+            expiry: setValue
+        }).then(function(){
+            console.log("set expiry.");
+        }).catch(function(error){
+            console.log("failed to set expiry. ", error);
+        });
+        if (setValue == null) {
+            expirySetList(clickID, false);
+        } else {
+            expirySetList(clickID, true);
         }
     }
 

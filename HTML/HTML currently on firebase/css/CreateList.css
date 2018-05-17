@@ -1,66 +1,89 @@
 
 body {
-  margin: 0;
-  min-width: 250px;
+    margin: 0;
+    min-width: 250px;
 }
 
 /* Include the padding and border in an element's total width and height */
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 
 /* Remove margins and padding from the list */
-ul {
-  margin: 0;
-  padding: 0;
+.myul {
+    margin: 0 !important;
+    padding: 0 !important;
     border:none;
 }
+.myul_dated_expired {
+    background:red;
+    padding-top: 3px !important;
+}
+.myul_undated_expired {
+    background:red;
+    padding-top: 0px !important;
+}
+.myul_dated {
+    background:#007bff;
+    padding-top: 3px !important;
+}
+.myul_undated {
+    background:#727272;
+    padding-top: 3px !important;
+}
+
 
 /* Style the list items */
 .myul li {
-  cursor: pointer;
+    cursor: pointer;
     border:none;
     z-index: 0;
-  position: relative;
-  padding: 10px 8px 10px 40px;
-    margin-left: 5px;
-    margin-right: 5px;
-  list-style-type: none;
-  background: #eee;
-  font-size: 18px;
-  transition: 0.2s;
-  
-  /* make the list items unselectable */
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+    position: relative;
+    padding: 10px 8px 10px 40px;
+    margin-left: 2px;
+    list-style-type: none;
+    background: #eee;
+    font-size: 18px;
+    transition: 0.2s;
+
+    /* make the list items unselectable */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 /* Set all odd list items to a different color (zebra-stripes) */
 .myul li:nth-child(odd) {
-  background: #f9f9f9;
+    background: #f9f9f9;
 }
+
 
 .checked_item {
     background: #c0f5c4 !important;
 }
 
+
+
 .used_item {
     background: #fc9873 !important;
 }
 
+.time_expired .calSelect{
+    background: #dc3545 !important;
+}
+
 /* Darker background-color on hover */
 .myul li:hover {
-  background: #ddd;
+    background: #ddd;
 }
 
 /* When clicked on, add a background color and strike out text */
 .myul li.checked {
-  background: #888;
-  color: #fff;
-  text-decoration: line-through;
+    background: #888;
+    color: #fff;
+    text-decoration: line-through;
 }
 
 
@@ -73,31 +96,46 @@ ul {
 
 /* Style the close button */
 .btn-danger{
-  position: absolute;
-  left: 0;
-  top: 5%;
+    position: absolute;
+    left: 5px;
+    top: 5%;
     bottom:5%;
 }
 /* Style the check button */
 .btn-success{
-  position: absolute;
-  right: 0;
-  top: 5%;
+    position: absolute;
+    right: 5px;
+    top: 5%;
     bottom:5%;
 }
 /* Style the date button */
 .cal{
-  position: absolute;
-  right: 45px;
-  top: 5%;
-    bottom:5%;
+    position: absolute;
+    left: calc(100% - 95px);
+    height:80px !important;
+    max-width: 60px !important;
+    top: 5%;
+}
+
+#bootstrap-overrides .calSelect{
+    padding-top:5px !important;
+    padding-bottom: 6px !important;
+    height: 42px !important;
+    font-weight: bold !important;
+    background: #a8a8a8 ;
+    border-color: #727272 !important;
+    text-align-last: center;
+}
+
+#bootstrap-overrides li span .expiry_set {
+    background: #007bff;
 }
 
 /* Style the edit button */
 .edit{
-  position: absolute;
-  right: 0px;
-  top: 5%;
+    position: absolute;
+    right: 0px;
+    top: 5%;
     bottom:5%;
 }
 
@@ -123,38 +161,42 @@ ul {
     background-size: cover;
     background-position: 0px -60px;
     background-repeat: no-repeat; 
-  padding: 10px 5px;
-  color: white;
+    padding: 10px 5px;
+    color: white;
     text-align: center;
-        z-index: 2;
+    z-index: 2;
 }
 
 /* Clear floats after the header */
 .header:after {
-  content: "";
-  display: table;
-  clear: both;
+    content: "";
+    display: table;
+    clear: both;
 }
 
 /* Style the input */
 input {
-  border: none;
+    border: none;
     padding: 0;
-  width: 75%;
+    width: 75%;
     height:45px;
     font-size: 100px;
 }
 
 /* Style the "Add" button */
 .addBtn {
-  padding: 0px;
-  background: #f0f0f0;
-  color: #555;
-height:45px;
+    padding: 0px;
+    background: #f0f0f0;
+    color: #555;
+    height:45px;
 }
 
 .fa-plus-square {
     height:100%;
+}
+
+.fa-calendar-alt {
+    margin-right: 5px;
 }
 
 .container {
