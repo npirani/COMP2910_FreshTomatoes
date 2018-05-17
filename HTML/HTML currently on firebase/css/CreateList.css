@@ -184,6 +184,8 @@ body {
 /* Style the input */
 input {
     border: none;
+    position:relative;
+    left: -5%;
     padding: 0;
     width: 75%;
     height:45px;
@@ -193,6 +195,9 @@ input {
 /* Style the "Add" button */
 .addBtn {
     padding: 0px;
+    position: relative;
+    top:-3px;
+    left:-6%;
     background: #f0f0f0;
     color: #555;
     height:45px;
