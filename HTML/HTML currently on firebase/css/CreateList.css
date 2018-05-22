@@ -215,3 +215,7 @@ input {
     padding: 0px !important;
 }
 
+.RecipeContainer {
+    margin-bottom: 10px;
+    height: 200px !important;
+}

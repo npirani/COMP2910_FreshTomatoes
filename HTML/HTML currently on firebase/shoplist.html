@@ -299,8 +299,8 @@
         var localItemName = document.getElementById("myInput").value;
         if (localItemName.trim() == "") {
             alert("Enter a non-blank item name!");
-        } else if (localItemName.toLowerCase().trim() == "kiwi") {
-            alert("Easter egg placeholder.");
+        } else if (localItemName.toLowerCase().trim() == "freshtomatoes") {
+            alert("Knowledge is knowing a tomato is a fruit. Wisdom is not putting it in a fruit salad.");
         } else {
             console.log("Attempting to add item to list: ", localItemName);
             var itemRef = db.collection("users").doc(uid).collection("items");
