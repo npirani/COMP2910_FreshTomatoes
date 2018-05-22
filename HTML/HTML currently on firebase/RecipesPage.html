@@ -107,11 +107,11 @@
             var expDate = new Date(Date.now() + 7 * 86400000);
             var nowDate = new Date(Date.now() + 86400000);
             apiKey = "86c9b63e90032118e473d5e41c78e81a";
-            
+
 
             var expiringItemsRef = db.collection("users").doc(uid).collection("items").where("set", "==", true).where("used", "==", false).where("expiry", "<=", expDate).where("expiry", ">=", nowDate).orderBy("expiry", "asc");       
             var expiringItemsRef2 = db.collection("users").doc(uid).collection("items").where("set", "==", true).where("used", "==", false).where("expiry", "<", expDate);
-//            .orderBy("expiry", "asc");       
+            //            .orderBy("expiry", "asc");       
 
             var itemNameArray = {};
 
@@ -152,31 +152,35 @@
             var stringLength = itemString.length - 2;
             var boio = itemString.substring(0, stringLength);
             console.log(boio);
-            
-            var itemPayload = {key: apiKey, q: boio, sort: "r"};
-            
-            $.get("http://localhost:1337/food2fork.com/api/search", itemPayload,function(data) {foodToForkProcess(data);}, "json");
+
+            var itemPayload = {fillIngredients: false, ingredients: boio, limitLicense: false, number: 5, ranking: 1};
+
+            $.get("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?mashape-key=pVbXhYhcmqmsh4RJn8qHt8eiE5qdp1QNRyDjsneJXrZPcWi1JJ", itemPayload,function(data) {foodToForkProcess(data);}, "json");
 
         }
 
         function foodToForkProcess(dataBoi) {
             console.log(dataBoi);
-            recipeBoi = dataBoi["recipes"];
-            for (var recipe in recipeBoi){
-                var recipeData = recipeBoi[recipe];
-                var imgURL = recipeData["image_url"];
-                var sourceURL = recipeData["source_url"];
-                var title = recipeData["title"];
+            for (var recipe in dataBoi){
+                console.log(recipe);
+                var recipeBoi = dataBoi[recipe];
+                var imgURL = recipeBoi["image"];
+                imgURL = imgURL.replace("312x231", "636x393");
+                var title = recipeBoi["title"];
+                var sourceURL = "https://spoonacular.com/recipes/";
+                sourceURL= sourceURL.concat(title.toLowerCase().replace(" ", "-"));
+                sourceURL= sourceURL.concat("-");
+                sourceURL= sourceURL.concat(recipeBoi["id"]);
                 foodToForkDisplay(title, imgURL, sourceURL);
             }
         }
-        
+
         function foodToForkDisplay(titleboi, imgURLboi, sourceURLboi) {
             console.log("data:");
             console.log(titleboi, imgURLboi, sourceURLboi);
-            
+
             var sourceDiv = document.getElementById("recipeContainer");
-            
+
             var recipeContainer = document.createElement("div");
             recipeContainer.className = "RecipeContainer";
             var recipeIMG = document.createElement("img");
@@ -190,7 +194,7 @@
             linkContainer.appendChild(recipeTitle);
             recipeContainer.appendChild(linkContainer);
             sourceDiv.appendChild(recipeContainer);
-            
+
         }
 
 
