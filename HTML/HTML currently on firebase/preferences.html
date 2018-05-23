@@ -41,7 +41,7 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link disabled" href="#">Recipes?</a>
+                        <a class="nav-link" href="RecipesPage.html">Recipes</a>
                     </li>
                 </ul>
             </div>
@@ -51,6 +51,7 @@
             <div class="container">
                 <h1 class="display-4">Preferences</h1>
                 <p class="lead">There aren't any preferences here, noob.</p>
+                <button class="btn-primary" onClick="tutorial()">Tutorial</button>
             </div>
         </div>
 
@@ -72,5 +73,9 @@
         }, function(error) {
             console.error('Sign Out Error', error);
         });
+    }
+    
+    function tutorial() {
+        window.location.href = "getstarted.html";
     }
 </script>

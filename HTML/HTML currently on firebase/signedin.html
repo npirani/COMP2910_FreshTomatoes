@@ -73,7 +73,7 @@
                 userCol.get().then(function (userDat) {
                     if (userDat.exists) {
                         console.log("User exists, redirecting to app");
-                        setTimeout("location.href = 'shoplist.html';",3500);
+                        setTimeout("location.href = 'shoplist.html';",500);
                     } else {
                         console.log("User does not exist, trying to create user");
                         userCol.set({
@@ -98,6 +98,7 @@
                                     }
                                 }).then(function(){
                                     console.log("lastThreeLists set");
+                                    setTimeout("location.href = 'getstarted.html';",100);
                                 }).catch(function(error2){
                                     console.log("Error setting lastThreeLists: ", error2);
                                 });
@@ -109,7 +110,7 @@
                             console.log("Error creating user: ", error);
                         });
 
-                        setTimeout("location.href = 'getstarted.html';",3500);
+                        
 
                     }
                 }).catch(function(error) {
@@ -126,6 +127,7 @@
                 console.log("Not logged in")
                 // User is signed out.
                 // ...
+                location.href = 'index.html';
             }
         });
     </script>

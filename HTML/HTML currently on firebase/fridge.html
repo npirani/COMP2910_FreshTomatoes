@@ -48,10 +48,10 @@
             </a>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
+                    <li class="nav-item">
                         <a class="nav-link" href="shoplist.html">Shopping List</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item active">
                         <a class="nav-link" href="fridge.html">My Fridge</a>
                     </li>
                     <li class="nav-item">
@@ -65,7 +65,7 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link disabled" href="#">Recipes?</a>
+                        <a class="nav-link" href="RecipesPage.html">Recipes</a>
                     </li>
                 </ul>
             </div>
@@ -130,6 +130,7 @@
         } else {
             // User is signed out.
             // ...
+            window.location.href = "index.html";
         }
 
 
@@ -357,6 +358,8 @@
 <!--SCUD scripts-->
 <script>
     function addItem(){
+        var addButton = document.getElementsByClassName("addBtn");
+        addButton.disabled = true;
         var localItemName = document.getElementById("myInput").value;
         if (localItemName.trim() == "") {
             alert("Enter a non-blank item name!");
@@ -377,6 +380,8 @@
                 console.log("Couldn't add item. ", errorboi);
             });
         }
+        document.getElementById("myInput").value = "";
+        addButton.disabled = false;
     }
 
     function deleteItem(clickID){
@@ -443,7 +448,7 @@
         }
     }
 
-        function signOut() {
+    function signOut() {
         firebase.auth().signOut().then(function() {
             console.log('Signed Out'); 
             setTimeout(function () {
