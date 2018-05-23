@@ -2,6 +2,7 @@
 body {
     margin: 0;
     min-width: 250px;
+	
 }
 
 /* Include the padding and border in an element's total width and height */
@@ -215,7 +216,41 @@ input {
     padding: 0px !important;
 }
 
+/*---------------------------recipe page css---------------------------------*/
+
 .RecipeContainer {
-    margin-bottom: 10px;
-    height: 200px !important;
+    margin-bottom: 30px;
+/*    height: 427px !important;*/
+	position: relative;
+    width: 100%;
+}
+.recipeTitle {
+	background-color: ghostwhite;
+    color: black;
+    font-family: sans-serif;
+    border: 1px solid red;
+    border-radius: 5px;
+	float: left;
+	min-width: 270px;
+	font-size: 20px;
+	
+}
+
+img.w3-border {
+    height: auto;
+    max-width: 100%;
+    float: left;
+    margin-bottom: 5px;
+    border: 2px solid #990000 !important;
+    border-radius: 8px;
+	margin-top: 7px;
+}
+@media only screen and (min-width: 600px) {
+	.RecipeContainer {
+    margin-bottom: 30px;
+/*    height: 427px !important;*/
+	position: relative;
+    width: 50%;
+	float: left;
+	}
 }

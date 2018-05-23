@@ -12,6 +12,10 @@
         <script src="https://code.jquery.com/jquery-3.3.1.min.js" ></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+		
+		<!--w3 css-->
+		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
 
         <!-- fontawesome CDN for icons-->
         <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/all.js" integrity="sha384-xymdQtn1n3lH2wcu0qhcdaOpQwyoarkgLVxC/wZ5q7h9gHtxICrpcaSUfygqZGOe" crossorigin="anonymous"></script>
@@ -38,6 +42,7 @@
 
     </head>
     <body> 
+		<div class="container-fluid">
         <!-- This is the navbar HTML -->
         <nav class="navbar navbar-expand-md navbar-light bg-light">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -81,7 +86,7 @@
 
 
         </div>
-
+		</div>
     </body>
 
     <!--Firebase/Firestore scripts-->
@@ -184,9 +189,14 @@
             var recipeContainer = document.createElement("div");
             recipeContainer.className = "RecipeContainer";
             var recipeIMG = document.createElement("img");
-            recipeIMG.className = "recipe_img";
+            recipeIMG.className = "w3-border";
+			recipeIMG.setAttribute("alt", "Responsive image");
             recipeIMG.setAttribute("src", imgURLboi);
-            var recipeTitle = document.createElement("h2");
+			
+
+			
+            var recipeTitle = document.createElement("div");
+			recipeTitle.className = "recipeTitle";
             recipeTitle.innerHTML = titleboi;
             var linkContainer = document.createElement("a");
             linkContainer.setAttribute("href", sourceURLboi);
@@ -194,6 +204,7 @@
             linkContainer.appendChild(recipeTitle);
             recipeContainer.appendChild(linkContainer);
             sourceDiv.appendChild(recipeContainer);
+
 
         }
 
