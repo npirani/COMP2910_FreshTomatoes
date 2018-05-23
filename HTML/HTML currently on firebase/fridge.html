@@ -130,6 +130,7 @@
         } else {
             // User is signed out.
             // ...
+            window.location.href = "index.html";
         }
 
 
@@ -357,6 +358,8 @@
 <!--SCUD scripts-->
 <script>
     function addItem(){
+        var addButton = document.getElementsByClassName("addBtn");
+        addButton.disabled = true;
         var localItemName = document.getElementById("myInput").value;
         if (localItemName.trim() == "") {
             alert("Enter a non-blank item name!");
@@ -377,6 +380,8 @@
                 console.log("Couldn't add item. ", errorboi);
             });
         }
+        document.getElementById("myInput").value = "";
+        addButton.disabled = false;
     }
 
     function deleteItem(clickID){
@@ -443,7 +448,7 @@
         }
     }
 
-        function signOut() {
+    function signOut() {
         firebase.auth().signOut().then(function() {
             console.log('Signed Out'); 
             setTimeout(function () {

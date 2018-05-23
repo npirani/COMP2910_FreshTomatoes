@@ -12,9 +12,9 @@
         <script src="https://code.jquery.com/jquery-3.3.1.min.js" ></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
-		
-		<!--w3 css-->
-		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+        <!--w3 css-->
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
 
         <!-- fontawesome CDN for icons-->
@@ -42,51 +42,51 @@
 
     </head>
     <body> 
-		<div class="container-fluid">
-        <!-- This is the navbar HTML -->
-        <nav class="navbar navbar-expand-md navbar-light bg-light">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <a href="#" class="navbar-brand">
-                <img class="logoboi" src="images/FreshTomatoes_onlytextInline.png">
-            </a>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="shoplist.html">Shopping List</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="fridge.html">My Fridge</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Account
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="preferences.html">Preferences</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Sign out</a>
-                        </div>
-                    </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="RecipesPage.html">Recipes</a>
-                    </li>
-                </ul>
+        <div class="container-fluid recipe-container-fluid">
+            <!-- This is the navbar HTML -->
+            <nav class="navbar navbar-expand-md navbar-light bg-light">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <a href="#" class="navbar-brand">
+                    <img class="logoboi" src="images/FreshTomatoes_onlytextInline.png">
+                </a>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="shoplist.html">Shopping List</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="fridge.html">My Fridge</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Account
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="preferences.html">Preferences</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" onClick="signOut()">Sign out</a>
+                            </div>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="RecipesPage.html">Recipes</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <!--Showcase HTML-->
+            <div class="w3-container" id="showcase">
+                <br>
+                <br>
+                <h1 class="w3-xxxlarge w3-text" id="showcasetext">Recipe Finder
+                </h1>
             </div>
-        </nav>
-        <!--Showcase HTML-->
-        <div class="w3-container" id="showcase">
-            <br>
-            <br>
-            <h1 class="w3-xxxlarge w3-text-red" id="showcasetext">Recipe Finder
-            </h1>
-        </div>
-        <div id=recipeContainer>
+            <div id=recipeContainer>
 
 
+            </div>
         </div>
-		</div>
     </body>
 
     <!--Firebase/Firestore scripts-->
@@ -104,6 +104,7 @@
             } else {
                 // User is signed out.
                 // ...
+                window.location.href = "index.html";
             }
 
 
@@ -158,7 +159,7 @@
             var boio = itemString.substring(0, stringLength);
             console.log(boio);
 
-            var itemPayload = {fillIngredients: false, ingredients: boio, limitLicense: false, number: 5, ranking: 1};
+            var itemPayload = {fillIngredients: false, ingredients: boio, limitLicense: false, number: 8, ranking: 1};
 
             $.get("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?mashape-key=pVbXhYhcmqmsh4RJn8qHt8eiE5qdp1QNRyDjsneJXrZPcWi1JJ", itemPayload,function(data) {foodToForkProcess(data);}, "json");
 
@@ -190,16 +191,17 @@
             recipeContainer.className = "RecipeContainer";
             var recipeIMG = document.createElement("img");
             recipeIMG.className = "w3-border";
-			recipeIMG.setAttribute("alt", "Responsive image");
+            recipeIMG.setAttribute("alt", "Responsive image");
             recipeIMG.setAttribute("src", imgURLboi);
-			
 
-			
+
+
             var recipeTitle = document.createElement("div");
-			recipeTitle.className = "recipeTitle";
+            recipeTitle.className = "recipeTitle";
             recipeTitle.innerHTML = titleboi;
             var linkContainer = document.createElement("a");
             linkContainer.setAttribute("href", sourceURLboi);
+            linkContainer.setAttribute("target", "_blank");
             linkContainer.appendChild(recipeIMG);
             linkContainer.appendChild(recipeTitle);
             recipeContainer.appendChild(linkContainer);
@@ -208,6 +210,16 @@
 
         }
 
+        function signOut() {
+            firebase.auth().signOut().then(function() {
+                console.log('Signed Out'); 
+                setTimeout(function () {
+                    window.location.href = "index.html"; //will redirect to index
+                }, 1000);
+            }, function(error) {
+                console.error('Sign Out Error', error);
+            });
+        }
 
 
 

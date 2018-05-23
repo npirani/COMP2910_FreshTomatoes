@@ -73,7 +73,7 @@
                 userCol.get().then(function (userDat) {
                     if (userDat.exists) {
                         console.log("User exists, redirecting to app");
-                        setTimeout("location.href = 'shoplist.html';",3500);
+                        setTimeout("location.href = 'shoplist.html';",1500);
                     } else {
                         console.log("User does not exist, trying to create user");
                         userCol.set({
@@ -126,6 +126,7 @@
                 console.log("Not logged in")
                 // User is signed out.
                 // ...
+                location.href = 'index.html';
             }
         });
     </script>
