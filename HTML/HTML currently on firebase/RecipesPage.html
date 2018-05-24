@@ -128,7 +128,7 @@
                     console.log("No expiring items found");
 
                 } else {
-                    console.log("Expiring items found!")
+                    console.log("Expiring items found!", results);
                     results.forEach(function (doc) {
                         console.log("Item data:", doc.data());
                         var expiry = doc.data()['expiry'];

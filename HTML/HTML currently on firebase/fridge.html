@@ -376,6 +376,7 @@
                 used: false
             }).then(function (addedItemRef) {
                 console.log("Added item. ", addedItemRef.id);
+                autoExpSet(addedItemRef.id, localItemName);
             }).catch(function (errorboi) {
                 console.log("Couldn't add item. ", errorboi);
             });
@@ -456,6 +457,42 @@
             }, 1000);
         }, function(error) {
             console.error('Sign Out Error', error);
+        });
+    }
+
+    function autoExpSet(itemID, itemName) {
+        var stdItemName = itemName.toLowerCase().trim();
+        console.log(stdItemName);
+        var itemRef = db.collection("users").doc(uid).collection("items").doc(itemID);
+        var itemsQuery = db.collection("commonItems").where("itemName", "==", stdItemName);
+
+        itemsQuery.get().then(function (data){
+            if (data.empty) {
+                console.log("No matching entries found");
+
+            } else {
+                console.log("Got matching entry woohoo:", data);
+                data.forEach(function (itemData) {
+                    console.log("entry data: ", itemData.data());
+                    var d = new Date(Date.now() + parseInt(itemData.data()['expiry']) * (86400000));
+                    d.setHours(23);
+                    d.setMinutes(59);
+                    console.log("expiry date is: day: ", d.getDate(), "hour: ", d.getHours(), "minutes: ", d.getMinutes());
+                    setValue = d; 
+                    itemRef.update({
+                        expiry: setValue
+                    }).then(function(){
+                        unsubscribe();
+                        listSnapshot();
+                    }).catch(function(error){
+                        console.log("Couldn't set item data for autoExpSet.", error);
+                    });
+                })
+
+            }
+
+        }).catch(function (error){
+            console.log("No matching entries, or error:", error);
         });
     }
 

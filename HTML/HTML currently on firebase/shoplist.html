@@ -104,6 +104,7 @@
 
 <!--Firebase/Firestore scripts-->
 <script>
+    currentListRef = "";
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
             // User is signed in.
@@ -121,7 +122,7 @@
             // ...
             console.log("logged out");
             window.location.href = "index.html";
-            
+
         }
 
         //        Script to display list items
@@ -134,7 +135,14 @@
             var currentListUID = databoi['lastThreeLists']['list1'];
             console.log(currentListUID);
             currentListRef = db.collection("users").doc(uid).collection("lists").doc(currentListUID);
-            currentListRef.onSnapshot(function(doc1) {
+            listSnapshot();
+        });
+    });
+    
+    unsubscribe = "";
+    
+    function listSnapshot() {
+            unsubscribe = currentListRef.onSnapshot(function(doc1) {
                 if (doc1.exists) {
                     document.getElementById("myUL").innerHTML = '';
                     console.log("Document data:", doc1.data());
@@ -149,9 +157,7 @@
                     console.log("No such document!");
                 }
             });
-        });
-    });
-
+    }
 </script>
 
 
@@ -329,6 +335,7 @@
                         itemIndex: tempItemMap
                     }).then(function(){
                         console.log("item index updated.");
+                        autoExpSet(itemID, localItemName);
                     }).catch(function(error90){
                         console.log("could not update item index. ", error90);
                     });
@@ -465,6 +472,44 @@
             console.error('Sign Out Error', error);
         });
     }
+
+    function autoExpSet(itemID, itemName) {
+        var stdItemName = itemName.toLowerCase().trim();
+        console.log(stdItemName);
+        var itemRef = db.collection("users").doc(uid).collection("items").doc(itemID);
+        var itemsQuery = db.collection("commonItems").where("itemName", "==", stdItemName);
+
+        itemsQuery.get().then(function (data){
+            if (data.empty) {
+                console.log("No matching entries found");
+
+            } else {
+                console.log("Got matching entry woohoo:", data);
+                data.forEach(function (itemData) {
+                    console.log("entry data: ", itemData.data());
+                    var d = new Date(Date.now() + parseInt(itemData.data()['expiry']) * (86400000));
+                    d.setHours(23);
+                    d.setMinutes(59);
+                    console.log("expiry date is: day: ", d.getDate(), "hour: ", d.getHours(), "minutes: ", d.getMinutes());
+                    setValue = d; 
+                    itemRef.update({
+                        expiry: setValue
+                    }).then(function(){
+                        unsubscribe();
+                        listSnapshot();
+                    }).catch(function(error){
+                        console.log("Couldn't set item data for autoExpSet.", error);
+                    });
+                })
+
+            }
+
+        }).catch(function (error){
+            console.log("No matching entries, or error:", error);
+        });
+    }
+
+
 
 
 </script>
