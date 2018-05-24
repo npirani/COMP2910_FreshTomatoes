@@ -111,7 +111,7 @@ h4 {
 }
 
 #description {
-    background-color: rgb(180,180,180,0.9);
+    background-color: rgba(180,180,180,0.9);
     margin: 20px;
     padding: 10px;
     text-align: center;

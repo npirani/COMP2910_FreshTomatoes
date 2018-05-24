@@ -197,7 +197,7 @@ input {
 .addBtn {
     padding: 0px;
     position: relative;
-    top:-3px;
+    top:-0.26vh;
     left:-6%;
     background: #f0f0f0;
     color: #555;
