@@ -41,7 +41,7 @@
 
 
     </head>
-    <body> 
+    <body id="recipeBody"> 
         <div class="container-fluid recipe-container-fluid">
             <!-- This is the navbar HTML -->
             <nav class="navbar navbar-expand-md navbar-light bg-light">
@@ -115,7 +115,9 @@
             apiKey = "86c9b63e90032118e473d5e41c78e81a";
 
 
-            var expiringItemsRef = db.collection("users").doc(uid).collection("items").where("set", "==", true).where("used", "==", false).where("expiry", "<=", expDate).where("expiry", ">=", nowDate).orderBy("expiry", "asc");       
+            var expiringItemsRef = db.collection("users").doc(uid).collection("items").where("set", "==", true).where("used", "==", false).where("expired", "==", false).where("expiry", "<=", expDate).where("expiry", ">=", nowDate).orderBy("expiry", "asc"); 
+            
+            
             var expiringItemsRef2 = db.collection("users").doc(uid).collection("items").where("set", "==", true).where("used", "==", false).where("expiry", "<", expDate);
             //            .orderBy("expiry", "asc");       
 
@@ -128,7 +130,7 @@
                     console.log("No expiring items found");
 
                 } else {
-                    console.log("Expiring items found!")
+                    console.log("Expiring items found!", results);
                     results.forEach(function (doc) {
                         console.log("Item data:", doc.data());
                         var expiry = doc.data()['expiry'];

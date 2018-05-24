@@ -197,7 +197,7 @@ input {
 .addBtn {
     padding: 0px;
     position: relative;
-    top:-3px;
+    top:-0.26vh;
     left:-6%;
     background: #f0f0f0;
     color: #555;
@@ -214,6 +214,14 @@ input {
 
 .container {
     padding: 0px !important;
+}
+
+#clearall {
+    background: #dc3545 !important;
+    color:white!important;
+    position: relative;
+    top: -38px;
+    left: 6px;
 }
 
 /*---------------------------recipe page css---------------------------------*/
@@ -264,4 +272,7 @@ img.w3-border {
 }
 .recipe_header {
     margin: 0px !important;
+}
+#recipeBody {
+    background: #f1f1f1;
 }
