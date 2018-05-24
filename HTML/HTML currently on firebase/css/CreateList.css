@@ -216,6 +216,14 @@ input {
     padding: 0px !important;
 }
 
+#clearall {
+    background: #dc3545 !important;
+    color:white!important;
+    position: relative;
+    top: -38px;
+    left: 6px;
+}
+
 /*---------------------------recipe page css---------------------------------*/
 
 .RecipeContainer {
@@ -264,4 +272,7 @@ img.w3-border {
 }
 .recipe_header {
     margin: 0px !important;
+}
+#recipeBody {
+    background: #f1f1f1;
 }

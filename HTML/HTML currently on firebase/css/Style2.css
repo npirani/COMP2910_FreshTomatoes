@@ -74,7 +74,7 @@ h4 {
     margin-bottom: 0;
 }
 #signDiv{
-    background: rgb(180,180,180,0.9);
+    background: rgba(180,180,180,0.9);
     max-width:300px;
     height: 200px;
     position:relative;

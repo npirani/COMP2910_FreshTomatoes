@@ -94,9 +94,15 @@
                 <ul id="myUL" class="myul">
                 </ul>
             </div>
-            <button class="btn btn-block" id="topboi" href="#top">
-                <span class="fas fa-chevron-up"></span>
-            </button>
+            <div id="bottomContainer">
+                <button class="btn btn-block" id="topboi" href="#top">
+                    <span class="fas fa-chevron-up"></span>
+                </button>           
+                <button class="btn" id="clearall" onClick="clearList()">
+                    <span class="far fa-clipboard"></span>
+                    <span class="fas fa-eraser"></span>
+                </button>
+            </div>
             <span class="element_test"></span>
         </div>
     </body>
@@ -138,25 +144,25 @@
             listSnapshot();
         });
     });
-    
-    unsubscribe = "";
-    
-    function listSnapshot() {
-            unsubscribe = currentListRef.onSnapshot(function(doc1) {
-                if (doc1.exists) {
-                    document.getElementById("myUL").innerHTML = '';
-                    console.log("Document data:", doc1.data());
-                    var listData = doc1.data();
-                    var itemIndex = listData['itemIndex'];
-                    for (var key in itemIndex) {
-                        itemHandler(itemIndex[key]);
-                    }
 
-                } else {
-                    // doc.data() will be undefined in this case
-                    console.log("No such document!");
+    unsubscribe = "";
+
+    function listSnapshot() {
+        unsubscribe = currentListRef.onSnapshot(function(doc1) {
+            if (doc1.exists) {
+                document.getElementById("myUL").innerHTML = '';
+                console.log("Document data:", doc1.data());
+                var listData = doc1.data();
+                var itemIndex = listData['itemIndex'];
+                for (var key in itemIndex) {
+                    itemHandler(itemIndex[key]);
                 }
-            });
+
+            } else {
+                // doc.data() will be undefined in this case
+                console.log("No such document!");
+            }
+        });
     }
 </script>
 
@@ -507,6 +513,21 @@
         }).catch(function (error){
             console.log("No matching entries, or error:", error);
         });
+    }
+
+    function clearList() {
+        var confirmClear = confirm("Delete all items from the shopping list?");
+        if (confirmClear) {
+            console.log("clearlist confirmed");
+            var liCollection = document.getElementById("myUL").childNodes;
+            liCollection.forEach(function (liSingle) {
+                var delID = liSingle.id.concat("_del");
+                deleteItem(delID);
+            });
+        } else {
+            console.log("clearlist canceled");
+        }
+        console.log("clearlist end");
     }
 
 
