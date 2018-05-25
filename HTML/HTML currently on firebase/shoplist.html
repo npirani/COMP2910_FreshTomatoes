@@ -520,9 +520,9 @@
         if (confirmClear) {
             console.log("clearlist confirmed");
             var liCollection = document.getElementById("myUL").childNodes;
-            liCollection.forEach(function (liSingle) {
+            liCollection.forEach(function (liSingle, index) {
                 var delID = liSingle.id.concat("_del");
-                deleteItem(delID);
+                setTimeout(function (){console.log(index); deleteItem(delID);}, index);
             });
         } else {
             console.log("clearlist canceled");
